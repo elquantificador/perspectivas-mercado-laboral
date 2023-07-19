@@ -128,7 +128,7 @@ empleo_2022_c <- ggplot(df_2022_c, aes(ciiu4_1_fct, empleo)) +
            color = "black") +
   coord_flip() +
   labs(x = "Número de empleos", 
-       y = "Actividad productiva", 
+       y = "Actividad Productiva", 
        title = "Número de empleos por actividad productiva 2022",
        subtitle = "Fuente : IESS")+
   theme_iess_2 +
