@@ -131,7 +131,7 @@ empleo_2022_c <- ggplot(df_2022_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
        y = "Número de empleos", 
        title = "Número de empleos por actividad productiva 2022",
        subtitle = "Fuente : IESS") +
-  geom_text(aes(label = empleo, y = empleo + 2), color = "#FFAC8E", 
+  geom_text(aes(label = empleo, y = empleo + 2), color = "black", 
             size = 3, position = position_dodge(0.9),
             hjust = -0.1) +
   theme(axis.text.y = element_text(hjust = 0)) +
@@ -152,7 +152,7 @@ empleo_2022_p <- ggplot(df_2022_p,
        subtitle = "Fuente : IESS",
        fill = "Sector") +
   geom_text(aes(label = empleo),
-            color = 'white',
+            color = 'black',
             vjust = 1) +
   theme_iess_2
 
@@ -171,7 +171,7 @@ empleo_2023_c <- ggplot(df_2023_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
        y = "Número de empleos", 
        title = "Número de empleos por actividad productiva hasta marzo 2023",
        subtitle = "Fuente : IESS") +
-  geom_text(aes(label = empleo, y = empleo + 2), color = "#FFAC8E", 
+  geom_text(aes(label = empleo, y = empleo + 2), color = "black", 
             size = 3, position = position_dodge(0.9),
             hjust = -0.1) +
   theme(axis.text.y = element_text(hjust = 0)) +
@@ -192,6 +192,6 @@ empleo_2023_p <- ggplot(df_2023_p,
        subtitle = "Fuente : IESS",
        fill = "Sector") +
   geom_text(aes(label = empleo),
-            color = 'white',
+            color = 'black',
             vjust = 1) +
   theme_iess_2
