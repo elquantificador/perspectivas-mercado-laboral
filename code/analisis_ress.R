@@ -74,14 +74,14 @@ df_2022_c <-
 
 df_2023_p <- 
   df_raw %>% 
-  filter(ano == 2023, mes == 12, 
+  filter(ano == 2023, mes == 3, 
          prov_fct %in% c("Azuay","Pichincha","Guayas","El Oro","Manabí")) %>%
   group_by(prov_fct,sector) %>% 
   summarize(empleo = n())
 
 df_2023_c <- 
   df_raw %>% 
-  filter(ano == 2023, mes == 12) %>% 
+  filter(ano == 2023, mes == 3) %>% 
   mutate(ciiu4_1_fct = fct_recode(ciiu4_1_fct,
                                   "Agricultura, ganadería, silvicultura y pesca" = "A",
                                   "Explotación de minas y canteras" = "B",
@@ -121,16 +121,20 @@ theme_iess_2 <-
 empleo_2022_c
 empleo_2022_p
 
-empleo_2022_c <- ggplot(df_2022_c, aes(ciiu4_1_fct, empleo)) +
+empleo_2022_c <- ggplot(df_2022_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
   geom_bar(stat = "identity",
            fill = "#647A8F",
            width = 0.8,
            color = "black") +
   coord_flip() +
-  labs(x = "Número de empleos", 
-       y = "Actividad Productiva", 
+  labs(x = "Actividad productiva", 
+       y = "Número de empleos", 
        title = "Número de empleos por actividad productiva 2022",
-       subtitle = "Fuente : IESS")+
+       subtitle = "Fuente : IESS") +
+  geom_text(aes(label = empleo, y = empleo + 2), color = "#FFAC8E", 
+            size = 3, position = position_dodge(0.9),
+            hjust = -0.1) +
+  theme(axis.text.y = element_text(hjust = 0)) +
   theme_iess_2 +
   theme(axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
@@ -149,7 +153,7 @@ empleo_2022_p <- ggplot(df_2022_p,
        fill = "Sector") +
   geom_text(aes(label = empleo),
             color = 'white',
-            vjust = 1.5) +
+            vjust = 1) +
   theme_iess_2
 
 # visualizacion 2023 -----
@@ -157,19 +161,20 @@ empleo_2022_p <- ggplot(df_2022_p,
 empleo_2023_c
 empleo_2023_p 
 
-empleo_2023_c <- ggplot(df_2023_c, aes(ciiu4_1_fct, empleo)) +
+empleo_2023_c <- ggplot(df_2023_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
   geom_bar(stat = "identity",
            fill = "#647A8F",
            width = 0.8,
            color = "black") +
   coord_flip() +
-  labs(x = "Número de empleos", 
-       y = "Actividad productiva", 
+  labs(x = "Actividad productiva", 
+       y = "Número de empleos", 
        title = "Número de empleos por actividad productiva hasta marzo 2023",
        subtitle = "Fuente : IESS") +
-  geom_text(aes(label = empleo, y = empleo + 0.3), color = "#FFAC8E", 
+  geom_text(aes(label = empleo, y = empleo + 2), color = "#FFAC8E", 
             size = 3, position = position_dodge(0.9),
-            vjust = 1) +
+            hjust = -0.1) +
+  theme(axis.text.y = element_text(hjust = 0)) +
   theme_iess_2 +
   theme(axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
@@ -186,4 +191,7 @@ empleo_2023_p <- ggplot(df_2023_p,
        title = "Número de empleos por provincia y sector hasta marzo 2023",
        subtitle = "Fuente : IESS",
        fill = "Sector") +
+  geom_text(aes(label = empleo),
+            color = 'white',
+            vjust = 1) +
   theme_iess_2
