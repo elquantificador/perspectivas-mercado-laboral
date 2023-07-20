@@ -30,7 +30,15 @@ df_raw <-
                                       "Manabí","Morona Santiago","Napo","Pastaza","Pichincha",
                                       "Tungurahua","Z.Chinchipe","Galápagos","Sucumbíos","Orellana",
                                       "Santo Domingo de los Tsáchilas","Santa Elena")),
-         ciiu4_1_fct = as.factor(ciiu4_1))
+         ciiu4_1_fct = as.factor(ciiu4_1),
+         region = fct_collapse(prov_fct,
+                               "Sierra" = c("Azuay","Bolívar","Carchi","Cañar","Chimborazo",
+                                            "Cotopaxi","Imbabura","Loja","Pichincha","Tungurahua"),
+                               "Costa" = c("El Oro","Esmeraldas","Guayas","Los Ríos","Manabí",
+                                           "Santa Elena","Santo Domingo de los Tsáchilas"),
+                               "Región Amazónica" = c("Morona Santiago","Napo","Orellana",
+                                                      "Pastaza","Sucumbíos","Z.Chinchipe"),
+                               "Islas Galápagos" = "Galápagos"))
 
 # agrupando la base de 2022 -----
 
@@ -70,6 +78,13 @@ df_2022_c <-
   summarize(mediana_sueldo = median(sueldo, na.rm = TRUE), empleo = n()) %>% 
   arrange(desc(mediana_sueldo))
 
+df_2022_r <- 
+  df_raw %>%
+  filter(ano == 2022, mes == 12) %>%
+  group_by(region) %>%
+  summarize(sueldo_promedio = mean(sueldo, na.rm = TRUE)) %>% 
+  arrange(desc(sueldo_promedio))
+
 # agrupando la base de 2023 -----
 
 df_2023_p <- 
@@ -108,6 +123,13 @@ df_2023_c <-
   summarize(mediana_sueldo = median(sueldo, na.rm = TRUE), empleo = n()) %>% 
   arrange(desc(mediana_sueldo))
 
+df_2023_r <- 
+  df_raw %>%
+  filter(ano == 2023) %>%
+  group_by(region) %>%
+  summarize(sueldo_promedio = mean(sueldo, na.rm = TRUE)) %>% 
+  arrange(desc(sueldo_promedio))
+
 # theme -----
 
 theme_iess_2 <-
@@ -120,6 +142,7 @@ theme_iess_2 <-
 # visualizacion 2022 -----
 empleo_2022_c
 empleo_2022_p
+sueldo_region
 
 empleo_2022_c <- ggplot(df_2022_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
   geom_bar(stat = "identity",
@@ -127,7 +150,7 @@ empleo_2022_c <- ggplot(df_2022_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
            width = 0.8,
            color = "black") +
   coord_flip() +
-  labs(x = "Actividad productiva", 
+  labs(x = "", 
        y = "Número de empleos", 
        title = "Número de empleos por actividad productiva 2022",
        subtitle = "Fuente : IESS") +
@@ -160,10 +183,30 @@ empleo_2022_p <- ggplot(df_2022_p,
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank())
 
+sueldo_region <- ggplot(df_2022_r, aes(reorder(region, sueldo_promedio),
+                                       sueldo_promedio)) +
+  geom_col(color = "black",
+           width = 0.8,
+           fill = "#647A8F") +
+  labs(x = "",
+       y = "Sueldo promedio",
+       title = "Sueldo promedio de los trabajadores en el sector formal 2022",
+       subtitle = "Fuente : IESS") +
+  geom_text(aes(label = round(sueldo_promedio, digits = 2)),
+            position = position_dodge(1),
+            vjust = -0.4) +
+  theme_iess_2 +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+  theme(axis.title.x = element_blank()) +
+  theme(axis.ticks.x = element_blank())
+
+
 # visualizacion 2023 -----
 
 empleo_2023_c
-empleo_2023_p 
+empleo_2023_p
+sueldo_region_23
 
 empleo_2023_c <- ggplot(df_2023_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
   geom_bar(stat = "identity",
@@ -171,7 +214,7 @@ empleo_2023_c <- ggplot(df_2023_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
            width = 0.8,
            color = "black") +
   coord_flip() +
-  labs(x = "Actividad productiva", 
+  labs(x = "", 
        y = "Número de empleos", 
        title = "Número de empleos por actividad productiva hasta marzo 2023",
        subtitle = "Fuente : IESS") +
@@ -203,3 +246,22 @@ empleo_2023_p <- ggplot(df_2023_p,
   theme_iess_2 +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank())
+
+sueldo_region_23 <- ggplot(df_2023_r, aes(reorder(region, sueldo_promedio),
+                                       sueldo_promedio)) +
+  geom_col(color = "black",
+           width = 0.8,
+           fill = "#647A8F") +
+  labs(x = "",
+       y = "Sueldo promedio",
+       title = "Sueldo promedio de los trabajadores en el sector formal hasta marzo 2023",
+       subtitle = "Fuente : IESS") +
+  geom_text(aes(label = round(sueldo_promedio, digits = 2)),
+            position = position_dodge(1),
+            vjust = -0.4) +
+  theme_iess_2 +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+  theme(axis.title.x = element_blank()) +
+  theme(axis.ticks.x = element_blank())
+
