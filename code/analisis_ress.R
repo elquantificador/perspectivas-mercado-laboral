@@ -143,7 +143,7 @@ empleo_2022_p <- ggplot(df_2022_p,
                         aes(reorder(prov_fct, -empleo), empleo, 
                             fill = sector)) +
   geom_col(width = 0.7,
-           position = "stack",
+           position = "dodge",
            color = "black") +
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
   labs(x = "Provincia",
@@ -152,9 +152,13 @@ empleo_2022_p <- ggplot(df_2022_p,
        subtitle = "Fuente : IESS",
        fill = "Sector") +
   geom_text(aes(label = empleo),
+            position = position_dodge(0.72),
             color = 'black',
-            vjust = 1) +
-  theme_iess_2
+            vjust = -0.4,
+            hjust = 0.4) +
+  theme_iess_2 +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
 
 # visualizacion 2023 -----
 
@@ -183,7 +187,7 @@ empleo_2023_p <- ggplot(df_2023_p,
                         aes(reorder(prov_fct, -empleo), empleo, 
                             fill = sector)) +
   geom_col(width = 0.7,
-           position = "stack",
+           position = "dodge",
            color = "black") +
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
   labs(x = "Provincia",
@@ -192,6 +196,10 @@ empleo_2023_p <- ggplot(df_2023_p,
        subtitle = "Fuente : IESS",
        fill = "Sector") +
   geom_text(aes(label = empleo),
+            position = position_dodge(0.72),
             color = 'black',
-            vjust = 1) +
-  theme_iess_2
+            vjust = -0.4,
+            hjust = 0.4) +
+  theme_iess_2 +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
