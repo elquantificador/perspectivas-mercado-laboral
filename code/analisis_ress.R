@@ -40,8 +40,7 @@ df_raw <-
                                            "Santa Elena","Santo Domingo de los Tsáchilas"),
                                "Región Amazónica" = c("Morona Santiago","Napo","Orellana",
                                                       "Pastaza","Sucumbíos","Z.Chinchipe"),
-                               "Islas Galápagos" = "Galápagos"),
-         fecha = paste(mes,ano,sep = "-")) %>% dmy()
+                               "Islas Galápagos" = "Galápagos")) 
 
 # agrupando la base de 2022 -----
 
@@ -84,7 +83,7 @@ df_2022_c <-
 
 df_2022_r <- 
   df_raw %>%
-  filter(ano == 2022, mes == 12) %>%
+  filter(ano == 2022) %>%
   group_by(region) %>%
   summarize(sueldo_promedio = mean(sueldo, na.rm = TRUE)) %>% 
   arrange(desc(sueldo_promedio))
@@ -133,11 +132,13 @@ df_2023_r <-
   group_by(region) %>%
   summarize(sueldo_promedio = mean(sueldo, na.rm = TRUE)) %>% 
   arrange(desc(sueldo_promedio))
-# agrupando la base de 2023 -----
+
+# agrupando la base para la evolucion del salario mediano -----
 
 df_median <- 
   df_raw %>% 
-  group_by(fecha,region) %>%
+  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
+  group_by(fecha_1, region) %>%
   summarise(sueldo_mediano = median(sueldo, na.rm = TRUE))
 
 # theme -----
@@ -162,7 +163,7 @@ empleo_2022_c <- ggplot(df_2022_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
   coord_flip() +
   labs(x = "", 
        y = "Número de empleos", 
-       title = "Número de empleos por actividad productiva 2022",
+       title = "Número de empleos formales por actividad productiva 2022",
        subtitle = "Fuente : IESS") +
   geom_text(aes(label = empleo, y = empleo + 2), color = "black", 
             size = 3, position = position_dodge(0.9),
@@ -181,7 +182,7 @@ empleo_2022_p <- ggplot(df_2022_p,
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
   labs(x = "Provincia",
        y = "Número de empleos",
-       title = "Número de empleos por provincia y sector 2022",
+       title = "Número de empleos formales por provincia y sector 2022",
        subtitle = "Fuente : IESS",
        fill = "Sector") +
   geom_text(aes(label = empleo),
@@ -244,7 +245,7 @@ empleo_2023_p <- ggplot(df_2023_p,
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
   labs(x = "Provincia",
        y = "Número de empleos",
-       title = "Número de empleos por provincia y sector hasta marzo 2023",
+       title = "Número de empleos formales por provincia y sector hasta marzo 2023",
        subtitle = "Fuente : IESS",
        fill = "Sector") +
   geom_text(aes(label = empleo),
@@ -259,8 +260,7 @@ empleo_2023_p <- ggplot(df_2023_p,
 sueldo_region_23 <- ggplot(df_2023_r, aes(reorder(region, sueldo_promedio),
                                        sueldo_promedio)) +
   geom_col(color = "black",
-           width = 0.8,
-           fill = "#647A8F") +
+           width = 0.8) +
   labs(x = "",
        y = "Sueldo promedio",
        title = "Sueldo promedio de los trabajadores en el sector formal hasta marzo 2023",
@@ -273,4 +273,25 @@ sueldo_region_23 <- ggplot(df_2023_r, aes(reorder(region, sueldo_promedio),
         axis.ticks.y = element_blank()) +
   theme(axis.title.x = element_blank()) +
   theme(axis.ticks.x = element_blank())
+
+# visualizacion sueldo mediano -----
+sueldo_mediano
+
+sueldo_mediano <- df_median %>%
+  filter(fecha_1 %>%  between(as.Date('2022-01-01'), as.Date('2023-03-01'))) %>%
+  ggplot(aes(fecha_1, sueldo_mediano, color = region)) +
+  geom_point() +
+  geom_line() +
+  scale_x_date(date_breaks = '3 months', 
+               date_labels = '%b-%y')+
+  labs(x = "",
+       y = "",
+       title = "Sueldo mediano en el sector formal Ecuador 2022-2023",
+       subtitle = "Fuente : IESS") +
+  scale_color_manual(values = c("#8B0000", "#FFAC8E", "#808000", "#647A8F")) +
+  theme_iess_2 +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
+        axis.text.y = element_text(size = 12))
+
+
 
