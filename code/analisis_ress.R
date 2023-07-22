@@ -141,6 +141,70 @@ df_median <-
   group_by(fecha_1, region) %>%
   summarise(sueldo_mediano = median(sueldo, na.rm = TRUE))
 
+# Base para la evolucion de la tasa de empleo formal-----
+
+df_empleo <- 
+  df_raw %>%
+  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
+  group_by(fecha_1) %>%
+  summarise(empleo = n())
+
+# Base para la evolucion del salario promedio-----
+
+df_avgw <- 
+  df_raw %>%
+  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
+  group_by(fecha_1) %>%
+  summarise(sueldo_promedio = mean(sueldo, na.rm = TRUE))
+
+# Base del salario promedio por ciiu-----
+
+df_avgw_c <- 
+  df_raw %>% 
+  mutate(ciiu4_1_fct = fct_recode(ciiu4_1_fct,
+                                  "Agropecuaria y pesca" = "A",
+                                  "Explotación de minas y canteras" = "B",
+                                  "Industrias manufactureras" = "C",
+                                  "Suministro de energía" = "D",
+                                  "Servicios públicos de saneamiento" = "E",
+                                  "Construcción" = "F",
+                                  "Comercio; reparación de vehículos motorizados" = "G",
+                                  "Transporte y almacenamiento" = "H",
+                                  "Hospitalidad y de servicio de comidas" = "I",
+                                  "Información y comunicación" = "J",
+                                  "Actividades financieras y de seguros" = "K",
+                                  "Actividades inmobiliarias" = "L",
+                                  "Actividades profesionales, científicas y técnicas" = "M",
+                                  "Servicios administrativos y de apoyo" = "N",
+                                  "Servicios públicos y de defensa" = "O",
+                                  "Enseñanza" = "P",
+                                  "Salud y asistencia" = "Q",
+                                  "Artes, entretenimiento y recreación" = "R",
+                                  "Otras actividades de servicios" = "S",
+                                  "Organizaciones internacionales" = "U",
+                                  "No determinada" = "Z0_Nocla_CIIU")) %>%
+  group_by(ciiu4_1_fct) %>% 
+  summarize(avg_sueldo = mean(sueldo, na.rm = TRUE)) %>% 
+  arrange(desc(avg_sueldo))
+
+# Base del salario promedio por provincia y sector-----
+
+df_avgw_p <- 
+  df_raw %>%
+  filter(prov_fct %in% c("Azuay","Pichincha","Guayas","El Oro","Manabí")) %>%
+  group_by(prov_fct,sector) %>%
+  summarise(avgw_p = mean(sueldo, na.rm = TRUE)) %>%
+  arrange(desc(avgw_p))
+  
+# Base del salario promedio por provincia y sector-----
+
+df_avgw_1 <- 
+  df_raw %>%
+  filter(prov_fct %in% c("Azuay","Pichincha","Guayas","El Oro","Manabí")) %>%
+  group_by(prov_fct) %>%
+  summarise(avgw_p = mean(sueldo, na.rm = TRUE)) %>%
+  arrange(desc(avgw_p))
+
 # theme -----
 
 theme_iess_2 <-
@@ -180,7 +244,7 @@ empleo_2022_p <- ggplot(df_2022_p,
            position = "dodge",
            color = "black") +
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
-  labs(x = "Provincia",
+  labs(x = "",
        y = "Número de empleos",
        title = "Número de empleos formales por provincia y sector 2022",
        subtitle = "Fuente : IESS",
@@ -201,7 +265,7 @@ sueldo_region_22 <- ggplot(df_2022_r, aes(reorder(region, sueldo_promedio),
            fill = "#647A8F") +
   labs(x = "",
        y = "Sueldo promedio",
-       title = "Sueldo promedio de los trabajadores en el sector formal 2022",
+       title = "Sueldo promedio de los trabajadores en el sector formal por provincia 2022",
        subtitle = "Fuente : IESS") +
   geom_text(aes(label = round(sueldo_promedio, digits = 2)),
             position = position_dodge(1),
@@ -243,7 +307,7 @@ empleo_2023_p <- ggplot(df_2023_p,
            position = "dodge",
            color = "black") +
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
-  labs(x = "Provincia",
+  labs(x = "",
        y = "Número de empleos",
        title = "Número de empleos formales por provincia y sector hasta marzo 2023",
        subtitle = "Fuente : IESS",
@@ -275,9 +339,9 @@ sueldo_region_23 <- ggplot(df_2023_r, aes(reorder(region, sueldo_promedio),
   theme(axis.ticks.x = element_blank())
 
 # visualizacion sueldo mediano -----
-sueldo_mediano
+sueldo_mediano_p
 
-sueldo_mediano <- df_median %>%
+sueldo_mediano_p <- df_median %>%
   filter(fecha_1 %>%  between(as.Date('2022-01-01'), as.Date('2023-03-01'))) %>%
   ggplot(aes(fecha_1, sueldo_mediano, color = region)) +
   geom_point() +
@@ -287,11 +351,106 @@ sueldo_mediano <- df_median %>%
   labs(x = "",
        y = "",
        title = "Sueldo mediano en el sector formal Ecuador 2022-2023",
-       subtitle = "Fuente : IESS") +
+       subtitle = "Fuente : IESS",
+       color = "Región") +
   scale_color_manual(values = c("#8B0000", "#FFAC8E", "#808000", "#647A8F")) +
   theme_iess_2 +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
         axis.text.y = element_text(size = 12))
+
+# visualizacion del numero de empleos formales-----
+graf_empleo
+
+graf_empleo <- ggplot(df_empleo, aes(fecha_1, empleo)) +
+  geom_line(colour = '#647A8F') +
+  geom_point(color = 'black') +
+  scale_x_date(date_breaks = '3 months', 
+               date_labels = '%b-%y') +
+  labs(x = "",
+       y = "",
+       title = "Número de empleos sector formal Ecuador 2022-2023",
+       subtitle = "Fuente : IESS") +
+  theme_iess_2 +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
+        axis.text.y = element_text(size = 12))
+
+# visualizacion del salario promedio-----
+graf_avgw
+
+graf_avgw <- ggplot(df_avgw, aes(fecha_1, sueldo_promedio)) +
+  geom_line(colour = '#FFAC8E') +
+  geom_point(color = 'black') +
+  scale_x_date(date_breaks = '3 months', 
+               date_labels = '%b-%y') +
+  labs(x = "",
+       y = "",
+       title = "Sueldo promedio en el sector formal Ecuador 2022-2023",
+       subtitle = "Fuente : IESS") +
+  theme_iess_2 +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
+        axis.text.y = element_text(size = 12))
+
+# visualizacion del salario promedio por ciiu-----
+avgw_c
+
+avgw_c <- ggplot(df_avgw_c, aes(reorder(ciiu4_1_fct, avg_sueldo), avg_sueldo)) +
+  geom_bar(stat = "identity",
+           fill = "#647A8F",
+           width = 0.8,
+           color = "black") +
+  coord_flip() +
+  labs(x = "", 
+       y = "Sueldo promedio", 
+       title = "Sueldo promedio en el sector formal por actividad productiva 2022-2023",
+       subtitle = "Fuente : IESS") +
+  geom_text(aes(label = round(avg_sueldo, digits = 2), y = avg_sueldo + 2), color = "black", 
+            size = 3, position = position_dodge(0.9),
+            hjust = -0.1) +
+  theme(axis.text.y = element_text(hjust = 0)) +
+  theme_iess_2 +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+# visualizacion del salario promedio por provincia-----
+avgw_p
+avgw_p_1
+
+avgw_p <- ggplot(df_avgw_p, aes(reorder(prov_fct, avgw_p),avgw_p,fill = sector)) +
+  geom_col(width = 0.7,
+           position = "dodge",
+           color = "black") +
+  scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
+  coord_flip() +
+  labs(x = "", 
+       y = "Sueldo promedio", 
+       title = "Sueldo promedio por provincia y sector 2022-2023",
+       subtitle = "Fuente : IESS",
+       fill = "Sector") +
+  geom_text(aes(label = round(avgw_p, digits = 2), y = avgw_p + 2), color = "black", 
+            size = 3, position = position_dodge(0.9),
+            hjust = -0.1) +
+  theme(axis.text.y = element_text(hjust = 0)) +
+  theme_iess_2 +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+avgw_p_1 <- ggplot(df_avgw_1, aes(reorder(prov_fct, avgw_p),avgw_p,fill = avgw_p)) +
+  geom_col(width = 0.7,
+           color = "black",
+           fill = "#FFAC8E") +
+  coord_flip() +
+  labs(x = "", 
+       y = "Sueldo promedio", 
+       title = "Sueldo promedio por provincia 2022-2023",
+       subtitle = "Fuente : IESS") +
+  geom_text(aes(label = round(avgw_p, digits = 2), y = avgw_p + 2), color = "black", 
+            size = 3, position = position_dodge(0.9),
+            hjust = -0.1) +
+  theme(axis.text.y = element_text(hjust = 0)) +
+  theme_iess_2 +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
 
 
 
