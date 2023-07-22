@@ -9,6 +9,8 @@ library(readxl)
 library(ggplot2)
 library(readr)
 library(forcats)
+library(lubridate)
+library(tidyverse)
 
 # Cargando datos ------------------------------------------------------------------------------------------
 
@@ -38,7 +40,8 @@ df_raw <-
                                            "Santa Elena","Santo Domingo de los Tsáchilas"),
                                "Región Amazónica" = c("Morona Santiago","Napo","Orellana",
                                                       "Pastaza","Sucumbíos","Z.Chinchipe"),
-                               "Islas Galápagos" = "Galápagos"))
+                               "Islas Galápagos" = "Galápagos"),
+         fecha = paste(mes,ano,sep = "-")) %>% dmy()
 
 # agrupando la base de 2022 -----
 
@@ -47,7 +50,8 @@ df_2022_p <-
   filter(ano == 2022, mes == 12, 
          prov_fct %in% c("Azuay","Pichincha","Guayas","El Oro","Manabí")) %>%
   group_by(prov_fct,sector) %>% 
-  summarize(empleo = n())
+  summarize(empleo = n(),
+            tot_empleo = sum(empleo))
 
 df_2022_c <- 
   df_raw %>% 
@@ -129,6 +133,12 @@ df_2023_r <-
   group_by(region) %>%
   summarize(sueldo_promedio = mean(sueldo, na.rm = TRUE)) %>% 
   arrange(desc(sueldo_promedio))
+# agrupando la base de 2023 -----
+
+df_median <- 
+  df_raw %>% 
+  group_by(fecha,region) %>%
+  summarise(sueldo_mediano = median(sueldo, na.rm = TRUE))
 
 # theme -----
 
@@ -142,7 +152,7 @@ theme_iess_2 <-
 # visualizacion 2022 -----
 empleo_2022_c
 empleo_2022_p
-sueldo_region
+sueldo_region_22
 
 empleo_2022_c <- ggplot(df_2022_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
   geom_bar(stat = "identity",
@@ -163,7 +173,7 @@ empleo_2022_c <- ggplot(df_2022_c, aes(reorder(ciiu4_1_fct, empleo), empleo)) +
         axis.ticks.x = element_blank())
 
 empleo_2022_p <- ggplot(df_2022_p,
-                        aes(reorder(prov_fct, -empleo), empleo, 
+                        aes(reorder(prov_fct, -tot_empleo), tot_empleo, 
                             fill = sector)) +
   geom_col(width = 0.7,
            position = "dodge",
@@ -183,7 +193,7 @@ empleo_2022_p <- ggplot(df_2022_p,
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank())
 
-sueldo_region <- ggplot(df_2022_r, aes(reorder(region, sueldo_promedio),
+sueldo_region_22 <- ggplot(df_2022_r, aes(reorder(region, sueldo_promedio),
                                        sueldo_promedio)) +
   geom_col(color = "black",
            width = 0.8,
@@ -200,7 +210,6 @@ sueldo_region <- ggplot(df_2022_r, aes(reorder(region, sueldo_promedio),
         axis.ticks.y = element_blank()) +
   theme(axis.title.x = element_blank()) +
   theme(axis.ticks.x = element_blank())
-
 
 # visualizacion 2023 -----
 
