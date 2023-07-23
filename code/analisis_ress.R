@@ -196,7 +196,7 @@ df_avgw_p <-
   summarise(avgw_p = mean(sueldo, na.rm = TRUE)) %>%
   arrange(desc(avgw_p))
   
-# Base del salario promedio por provincia y sector-----
+# Base del salario promedio por provincia -----
 
 df_avgw_1 <- 
   df_raw %>%
@@ -324,7 +324,8 @@ empleo_2023_p <- ggplot(df_2023_p,
 sueldo_region_23 <- ggplot(df_2023_r, aes(reorder(region, sueldo_promedio),
                                        sueldo_promedio)) +
   geom_col(color = "black",
-           width = 0.8) +
+           width = 0.8,
+           fill = "#647A8F") +
   labs(x = "",
        y = "Sueldo promedio",
        title = "Sueldo promedio de los trabajadores en el sector formal hasta marzo 2023",
