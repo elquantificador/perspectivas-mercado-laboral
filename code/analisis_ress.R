@@ -456,9 +456,9 @@ graf_empleo_p <- empleo_2022_p +
   plot_layout(ncol = 2) + 
   plot_annotation(title = "Número de empleos formales por provincia y sector 2022-2023",
                   subtitle = "Fuente: IESS") +
-  theme = theme(plot.title = element_text(hjust = 0.5, size = 20)) +
-  labs( x = "Provincia") + 
-  theme(axis.title.x = element_text(hjust=-0.10))
+  labs( x = "Provincia") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20))
+theme(axis.title.x = element_text(hjust=-0.12))
 
 ggsave("figures/grafico_empleo_p.png", plot = graf_empleo_p,
        device = "png",
@@ -470,7 +470,7 @@ graf_sueldo_r <- sueldo_region_22 + sueldo_region_23 +
   plot_layout(ncol = 2) +
   plot_annotation(title = "Sueldo promedio de los trabajadores en el sector formal 2022-2023",
                   subtitle = "Fuente: IESS") +
-  theme = theme(plot.title = element_text(hjust = 0.5, size = 20)) +
+  theme(plot.title = element_text(hjust = 0.5, size = 20)) +
   labs( x = "Región") + 
   theme(axis.title.x = element_text(hjust=-0.10))
 
