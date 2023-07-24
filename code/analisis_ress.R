@@ -11,6 +11,7 @@ library(readr)
 library(forcats)
 library(lubridate)
 library(tidyverse)
+library(patchwork)
 
 # Cargando datos ------------------------------------------------------------------------------------------
 
@@ -450,8 +451,7 @@ avgw_p_1 <- ggplot(df_avgw_1, aes(reorder(prov_fct, avgw_p),avgw_p,fill = avgw_p
 
 # guardando los graficos-----
  
-graf_empleo_p <- 
-  empleo_2022_p + 
+graf_empleo_p <- empleo_2022_p + 
   empleo_2023_p +
   plot_layout(ncol = 2) + 
   plot_annotation(title = "Número de empleos formales por provincia y sector 2022-2023",
