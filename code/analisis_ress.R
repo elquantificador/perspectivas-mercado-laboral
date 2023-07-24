@@ -246,8 +246,7 @@ empleo_2022_p <- ggplot(df_2022_p,
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
   labs(x = "",
        y = "Número de empleos",
-       title = "Número de empleos formales por provincia y sector 2022",
-       subtitle = "Fuente : IESS",
+       title = "2022",
        fill = "Sector") +
   geom_text(aes(label = empleo),
             position = position_dodge(0.72),
@@ -265,8 +264,7 @@ sueldo_region_22 <- ggplot(df_2022_r, aes(reorder(region, sueldo_promedio),
            fill = "#647A8F") +
   labs(x = "",
        y = "Sueldo promedio",
-       title = "Sueldo promedio de los trabajadores en el sector formal por provincia 2022",
-       subtitle = "Fuente : IESS") +
+       title = "2022") +
   geom_text(aes(label = round(sueldo_promedio, digits = 2)),
             position = position_dodge(1),
             vjust = -0.4) +
@@ -309,8 +307,7 @@ empleo_2023_p <- ggplot(df_2023_p,
   scale_fill_manual(values =c("#647A8F","#FFAC8E")) +
   labs(x = "",
        y = "Número de empleos",
-       title = "Número de empleos formales por provincia y sector hasta marzo 2023",
-       subtitle = "Fuente : IESS",
+       title = "2023",
        fill = "Sector") +
   geom_text(aes(label = empleo),
             position = position_dodge(0.72),
@@ -325,11 +322,10 @@ sueldo_region_23 <- ggplot(df_2023_r, aes(reorder(region, sueldo_promedio),
                                        sueldo_promedio)) +
   geom_col(color = "black",
            width = 0.8,
-           fill = "#647A8F") +
+           fill = "#FFAC8E") +
   labs(x = "",
        y = "Sueldo promedio",
-       title = "Sueldo promedio de los trabajadores en el sector formal hasta marzo 2023",
-       subtitle = "Fuente : IESS") +
+       title = "2023") +
   geom_text(aes(label = round(sueldo_promedio, digits = 2)),
             position = position_dodge(1),
             vjust = -0.4) +
@@ -452,6 +448,76 @@ avgw_p_1 <- ggplot(df_avgw_1, aes(reorder(prov_fct, avgw_p),avgw_p,fill = avgw_p
   theme(axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 
+# guardando los graficos-----
+ 
+graf_empleo_p <- 
+  empleo_2022_p + 
+  empleo_2023_p +
+  plot_layout(ncol = 2) + 
+  plot_annotation(title = "Número de empleos formales por provincia y sector 2022-2023",
+                  subtitle = "Fuente: IESS") +
+  theme = theme(plot.title = element_text(hjust = 0.5, size = 20)) +
+  labs( x = "Provincia") + 
+  theme(axis.title.x = element_text(hjust=-0.10))
 
+ggsave("figures/grafico_empleo_p.png", plot = graf_empleo_p,
+       device = "png",
+       width = 13,
+       height = 7,
+       dpi =1200)
 
+graf_sueldo_r <- sueldo_region_22 + sueldo_region_23 +
+  plot_layout(ncol = 2) +
+  plot_annotation(title = "Sueldo promedio de los trabajadores en el sector formal 2022-2023",
+                  subtitle = "Fuente: IESS") +
+  theme = theme(plot.title = element_text(hjust = 0.5, size = 20)) +
+  labs( x = "Región") + 
+  theme(axis.title.x = element_text(hjust=-0.10))
 
+ggsave("figures/grafico_sueldo_r.png", plot = graf_sueldo_r,
+       device = "png",
+       width = 13,
+       height = 7,
+       dpi =1200)
+
+ggsave("figures/grafico_empleo_c.png", plot = empleo_2022_c,
+       device = "png",
+       width = 13,
+       height = 7,
+       dpi =1200)
+
+ggsave("figures/grafico_medianw_p.png", plot = sueldo_mediano_p,
+       device = "png",
+       width = 13,
+       height = 7,
+       dpi =900)
+
+ggsave("figures/grafico_empleos_ec.png", plot = graf_empleo,
+       device = "png",
+       width = 13,
+       height = 7,
+       dpi =900)
+
+ggsave("figures/grafico_avg_w.png", plot = graf_avgw,
+       device = "png",
+       width = 13,
+       height = 7,
+       dpi =900)
+
+ggsave("figures/grafico_avgw_c.png", plot = avgw_c,
+       device = "png",
+       width = 14,
+       height = 7,
+       dpi =1200)
+
+ggsave("figures/grafico_avgw_ps.png", plot = avgw_p,
+       device = "png",
+       width = 14,
+       height = 7,
+       dpi =1200)
+
+ggsave("figures/grafico_avgw_p.png", plot = avgw_p_1,
+       device = "png",
+       width = 14,
+       height = 7,
+       dpi =1200)
