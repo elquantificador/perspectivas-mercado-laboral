@@ -12,6 +12,7 @@ library(forcats)
 library(lubridate)
 library(tidyverse)
 library(patchwork)
+library(scales)
 
 # Cargando datos ------------------------------------------------------------------------------------------
 
@@ -87,7 +88,8 @@ df_empleo <-
   df_raw %>%
   mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
   group_by(fecha_1, sector) %>%
-  summarise(empleo = n())
+  summarise(empleo = n()) %>%
+  mutate(porcentaje_empleo = empleo/sum(empleo))
 
 # Base para la evolucion de la tasa de empleo formal-----
 
@@ -97,12 +99,12 @@ df_empleo_1 <-
   group_by(fecha_1) %>%
   summarise(empleo = n())
 
-# Base para la evolucion del salario mediano-----
+# Base para la evolucion del salario mediano por sector-----
 
 df_median <- 
   df_raw %>%
   mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
-  group_by(fecha_1) %>%
+  group_by(fecha_1, sector) %>%
   summarise(sueldo_mediano = median(sueldo, na.rm = TRUE))
 
 # theme -----
@@ -111,8 +113,25 @@ theme_iess_2 <-
   theme_classic() +
   theme(panel.grid = element_blank(),
         plot.caption = element_text(hjust = 0, face = 'italic'),
-        legend.background = element_blank(),
+        legend.background = element_rect(fill="white", size=0.5, linetype="solid", colour ="black"),
         text =  element_text(color = 'black', size = 12))
+
+# captions -----
+
+caption_median <- "Nota: La mediana del sueldo indica cual es el valor del salario que se encuentra en 
+el medio de todo el conjunto de datos, de modo que la mitad de los trabajadores del
+sector formal ganan más que la mediana del sueldo, mientras que la otra mitad gana menos.
+Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
+
+caption_empleo <- "Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
+
+caption_medianp <- "Nota: Para la realización de este gráfico se tomó en cuenta solo
+a las cinco mayores provincias del Ecuador. Fuente: Instituto Nacional de Estadística y Censos (INEC),
+www.ecuadorencifras.gob.ec"
+
+caption_ciiu <- "Nota: Para la  división de industrias vistas en este gráfico, se 
+tomó en cuenta la Clasificación Industrial Internacional Uniforme (CIIU).
+Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
 
 # visualizacion ciiu -----
 
@@ -126,8 +145,8 @@ graf_median_ciiu <-
   coord_flip() +
   labs(x = "", 
        y = "Mediana del sueldo", 
-       title = "Mediana del sueldo en el sector formal por actividad productiva",
-       subtitle = "Fuente: Instituto de Seguridad Social (IESS)") +
+       title = "Mediana del sueldo en el sector formal por industria",
+       caption = str_wrap(caption_ciiu, 175)) +
   geom_text(aes(label = round(mediana_sueldo, digits = 2),
                 y = mediana_sueldo + 2), color = "black", 
             size = 3, position = position_dodge(0.9),
@@ -139,45 +158,40 @@ graf_median_ciiu <-
 
 # visualizacion del numero de empleos formales por sector-----
 
-graf_empleo <- ggplot(df_empleo, aes(fecha_1, empleo, color = sector)) +
+graf_empleo <- ggplot(df_empleo, aes(fecha_1, porcentaje_empleo, color = sector)) +
   geom_line() +
   geom_point(color = 'black') +
-  scale_x_date(date_breaks = '3 months', 
-               date_labels = '%b-%y') +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%b-%y") +
   labs(x = "",
-       y = "",
-       title = "Por sector",
-       color = "Sector") +
+       y = "% del total de personas con trabajo formal",
+       title = "Evolución de la composición de empleos formales por sector",
+       color = "Sector",
+       caption = str_wrap(caption_empleo, 175)) +
   scale_color_manual(values = c("#647A8F","#FFAC8E")) +
+  scale_y_continuous(labels = percent_format(scale = 1)) +
+  geom_text(aes(label = scales::percent(porcentaje_empleo,accuracy = 0.1)), color = "black", 
+            size = 2.4,
+            hjust = 1.2,
+            vjust = 1.5) +
   theme_iess_2 +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
-        axis.text.y = element_text(size = 12)) 
-
-# visualizacion del numero de empleos formales-----
-
-graf_empleo_1 <- ggplot(df_empleo_1, aes(fecha_1, empleo)) +
-  geom_line(colour = '#647A8F') +
-  geom_point(color = 'black') +
-  scale_x_date(date_breaks = '3 months', 
-               date_labels = '%b-%y') +
-  labs(x = "",
-       y = "",
-       title = "Total") +
-  theme_iess_2 +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
-        axis.text.y = element_text(size = 12))
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) 
 
 # visualizacion del salario mediano-----
 
-graf_median <- ggplot(df_median, aes(fecha_1, sueldo_mediano)) +
-  geom_line(colour = '#647A8F') +
+graf_median <- ggplot(df_median, aes(fecha_1, sueldo_mediano, color = sector)) +
+  geom_line() +
   geom_point(color = 'black') +
-  scale_x_date(date_breaks = '3 months', 
+  scale_x_date(date_breaks = '1 month', 
                date_labels = '%b-%y') +
   labs(x = "",
        y = "",
        title = "Mediana del sueldo en el sector formal Ecuador 2022-2023",
-       subtitle = "Fuente: Instituto de Seguridad Social (IESS)") +
+       color = "Sector",
+       caption = str_wrap(caption_median, 175)) +
+  scale_color_manual(values = c("#647A8F","#FFAC8E")) +
   theme_iess_2 +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
         axis.text.y = element_text(size = 12))
@@ -192,8 +206,8 @@ graf_median_p <- ggplot(df_median_p, aes(reorder(prov_fct, median_p),median_p)) 
   coord_flip() +
   labs(x = "", 
        y = "Mediana del sueldo", 
-       title = "Mediana del sueldo en el sector formal por provincia",
-       subtitle = "Fuente: Instituto de Seguridad Social (IESS)") +
+       title = "Mediana del sueldo en el sector formal por provincia marzo 2023",
+       caption = str_wrap(caption_medianp, 175)) +
   geom_text(aes(label = round(median_p, digits = 2), y = median_p + 2), color = "black", 
             size = 3, position = position_dodge(0.9),
             hjust = -0.1) +
@@ -205,15 +219,7 @@ graf_median_p <- ggplot(df_median_p, aes(reorder(prov_fct, median_p),median_p)) 
 
 # guardando los graficos-----
  
-graf_empleo_t <- graf_empleo + 
-  graf_empleo_1 +
-  plot_layout(ncol = 2) + 
-  plot_annotation(title = "Evolución del número de empleos formales",
-                  subtitle = "Fuente: Instituto de Seguridad Social (IESS)") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20)) +
-theme(axis.title.x = element_text(hjust=-0.12))
-
-ggsave("figures/grafico_empleo_t.png", plot = graf_empleo_t,
+ggsave("figures/grafico_empleo_s.png", plot = graf_empleo,
        device = "png",
        width = 13,
        height = 7,
