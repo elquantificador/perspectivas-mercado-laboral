@@ -145,7 +145,7 @@ ggplot(df_empl_p1 %>% filter(prov_fct %in% c("Azuay","Pichincha","Guayas","El Or
 # theme -----
 
 theme_iess_2 <-
-  theme_classic() +
+  theme_bw() +
   theme(panel.grid = element_blank(),
         plot.caption = element_text(hjust = 0, face = 'italic'),
         legend.background = element_rect(fill="white", size=0.5, linetype="solid", colour ="black"),
@@ -197,29 +197,6 @@ graf_median_ciiu <-
   theme(axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 
-# visualizacion del numero de empleos formales por sector-----
-
-graf_empleo <- ggplot(df_empleo, aes(fecha_1, porcentaje_empleo, color = sector)) +
-  geom_line() +
-  geom_point(color = 'black') +
-  scale_x_date(date_breaks = "1 month", 
-               date_labels = "%b-%y") +
-  labs(x = "",
-       y = "% del total de personas con trabajo formal",
-       title = "Evolución de la composición de empleos formales por sector",
-       color = "Sector",
-       caption = str_wrap(caption_empleo, 175)) +
-  scale_color_manual(values = c("#647A8F","#FFAC8E")) +
-  scale_y_continuous(labels = percent_format(scale = 1)) +
-  geom_text(aes(label = scales::percent(porcentaje_empleo,accuracy = 0.1)), color = "black", 
-            size = 2.4,
-            hjust = 1.2,
-            vjust = 1.5) +
-  theme_iess_2 +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank()) 
-
 # visualizacion del salario mediano-----
 
 graf_median <- ggplot(df_median, aes(fecha_1, sueldo_mediano, color = sector)) +
@@ -230,12 +207,13 @@ graf_median <- ggplot(df_median, aes(fecha_1, sueldo_mediano, color = sector)) +
   labs(x = "",
        y = "",
        title = "Mediana del sueldo en el sector formal Ecuador 2022-2023",
-       color = "Sector",
        caption = str_wrap(caption_median, 175)) +
   scale_color_manual(values = c("#647A8F","#FFAC8E")) +
+  facet_grid(cols = vars(sector)) +
   theme_iess_2 +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
-        axis.text.y = element_text(size = 12))
+        axis.text.y = element_text(size = 12),
+        legend.position = "none")
 
 # visualizacion del salario mediano por provincia-----
 
@@ -245,6 +223,7 @@ graf_median_p <- ggplot(df_median_p, aes(reorder(prov_fct, median_p),median_p)) 
            position = "dodge",
            color = "black") +
   coord_flip() +
+  scale_y_continuous(limits = c(450, 750)) +
   labs(x = "", 
        y = "Mediana del sueldo", 
        title = "Mediana del sueldo en el sector formal por provincia marzo 2023",
@@ -266,19 +245,13 @@ graf_empleo <- ggplot(df_empleo, aes(fecha_1, empleo)) +
                date_labels = '%b-%y') +
   labs(x = "",
        y = "",
-       title = "Evolución  del número de empleos sector formal Ecuador 2022-2023",
+       title = "Evolución del número de empleos registrados en la seguridad social 2022-2023",
        caption = str_wrap(caption_totempl, 175)) +
   theme_iess_2 +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
         axis.text.y = element_text(size = 12))
 
 # guardando los graficos-----
- 
-ggsave("figures/grafico_empleo_s.png", plot = graf_empleo,
-       device = "png",
-       width = 13,
-       height = 7,
-       dpi =1200)
 
 ggsave("figures/grafico_ciiu.png", plot = graf_median_ciiu,
        device = "png",
