@@ -4,16 +4,15 @@
 
 # Cargar librerias
 
-library(dplyr)
-library(readxl)
-library(ggplot2)
-library(readr)
-library(forcats)
-library(lubridate)
-library(tidyverse)
-library(patchwork)
-library(scales)
-
+if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
+if(!require(readxl)) install.packages("readxl", repos = "http://cran.us.r-project.org")
+if(!require(ggplot2)) install.packages("ggplot2", repos = "http://cran.us.r-project.org")
+if(!require(readr)) install.packages("readr", repos = "http://cran.us.r-project.org")
+if(!require(forcats)) install.packages("forcats", repos = "http://cran.us.r-project.org")
+if(!require(lubridate)) install.packages("lubridate", repos = "http://cran.us.r-project.org")
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(patchwork)) install.packages("patchwork", repos = "http://cran.us.r-project.org")
+if(!require(scales)) install.packages("scales", repos = "http://cran.us.r-project.org")
 # Cargando datos ------------------------------------------------------------------------------------------
 
 source("code/ress_download.R")
@@ -160,8 +159,6 @@ pueden distorsionar en mayor medida al promedio. La mediana del sueldo indica cu
 del salario que se encuentra en el medio de todo el conjunto de datos, de modo que la mitad de los 
 trabajadores del sector formal ganan más que la mediana del sueldo, mientras que la otra mitad gana menos.
 Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
-
-caption_empleo <- "Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
 
 caption_medianp <- "Nota: En la realización de este grafico se tomó en cuenta las cinco provincias mas
 grandes del Ecuador y otras cinco provincias amazónicas para el análisis de las diferencias entre salarios medianos. 
