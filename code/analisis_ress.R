@@ -13,6 +13,7 @@ if(!require(lubridate)) install.packages("lubridate", repos = "http://cran.us.r-
 if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
 if(!require(patchwork)) install.packages("patchwork", repos = "http://cran.us.r-project.org")
 if(!require(scales)) install.packages("scales", repos = "http://cran.us.r-project.org")
+
 # Cargando datos ------------------------------------------------------------------------------------------
 
 source("code/ress_download.R")
@@ -20,6 +21,36 @@ source("code/ress_download.R")
 # Guardar la base de datos en la computadora con save(ress_raw, file = 'data/base_iess.RData')
 # Si no se ejecuta el codigo por si solo ejecutar parte por parte siguiendo instrucciones dentro del script ress_download.R
 # Cargar la base de datos del archivo Rdata con load('data/base_iess.Rdata')
+
+# theme -----
+
+theme_iess_2 <-
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        plot.caption = element_text(hjust = 0, face = 'italic'),
+        legend.background = element_rect(fill="white", size=0.5, linetype="solid", colour ="black"),
+        text =  element_text(color = 'black', size = 12))
+
+# captions -----
+
+caption_median <- "Nota:  se usó la mediana del salario para la realización de este gráfico, 
+al ser un mejor indicador que el salario promedio para observar los cambios en los salarios, 
+a causa de que la mediana se ve menos afectada por valores atípicos o valores extremos que sí 
+pueden distorsionar en mayor medida al promedio. La mediana del sueldo indica cual es el valor 
+del salario que se encuentra en el medio de todo el conjunto de datos, de modo que la mitad de los 
+trabajadores del sector formal ganan más que la mediana del sueldo, mientras que la otra mitad gana menos.
+Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
+
+caption_medianp <- "Nota: En la realización de este grafico se tomó en cuenta las cinco provincias mas
+grandes del Ecuador y otras cinco provincias amazónicas para el análisis de las diferencias entre salarios medianos. 
+Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
+
+caption_ciiu <- "Nota: Para la  división de industrias vistas en este gráfico, se 
+tomó en cuenta la Clasificación Industrial Internacional Uniforme (CIIU), que agrupa
+una serie de actividades económicas, agrupándolas en categorías y asinando un código alfanumérico.
+Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
+
+caption_totempl <- "Nota: Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
 
 # Análisis ------------------------------------------------------------------------------------------------
 
@@ -141,36 +172,6 @@ ggplot(df_empl_p1 %>% filter(prov_fct %in% c("Azuay","Pichincha","Guayas","El Or
   theme(axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 
-# theme -----
-
-theme_iess_2 <-
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        plot.caption = element_text(hjust = 0, face = 'italic'),
-        legend.background = element_rect(fill="white", size=0.5, linetype="solid", colour ="black"),
-        text =  element_text(color = 'black', size = 12))
-
-# captions -----
-
-caption_median <- "Nota:  se usó la mediana del salario para la realización de este gráfico, 
-al ser un mejor indicador que el salario promedio para observar los cambios en los salarios, 
-a causa de que la mediana se ve menos afectada por valores atípicos o valores extremos que sí 
-pueden distorsionar en mayor medida al promedio. La mediana del sueldo indica cual es el valor 
-del salario que se encuentra en el medio de todo el conjunto de datos, de modo que la mitad de los 
-trabajadores del sector formal ganan más que la mediana del sueldo, mientras que la otra mitad gana menos.
-Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
-
-caption_medianp <- "Nota: En la realización de este grafico se tomó en cuenta las cinco provincias mas
-grandes del Ecuador y otras cinco provincias amazónicas para el análisis de las diferencias entre salarios medianos. 
-Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
-
-caption_ciiu <- "Nota: Para la  división de industrias vistas en este gráfico, se 
-tomó en cuenta la Clasificación Industrial Internacional Uniforme (CIIU), que agrupa
-una serie de actividades económicas, agrupándolas en categorías y asinando un código alfanumérico.
-Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
-
-caption_totempl <- "Nota: Fuente: Instituto Nacional de Estadística y Censos (INEC), www.ecuadorencifras.gob.ec"
-
 # visualizacion ciiu -----
 
 graf_median_ciiu <- 
@@ -214,18 +215,18 @@ graf_median <- ggplot(df_median, aes(fecha_1, sueldo_mediano, color = sector)) +
 
 # visualizacion del salario mediano por provincia-----
 
-graf_median_p <- ggplot(df_median_p, aes(reorder(prov_fct, median_p),median_p)) +
+graf_median_p <- 
+  ggplot(df_median_p, aes(reorder(prov_fct, median_p),median_p-450)) +
   geom_col(width = 0.8,
            fill = "#FFAC8E",
            position = "dodge",
            color = "black") +
   coord_flip() +
-  scale_y_continuous(limits = c(450, 750)) +
   labs(x = "", 
        y = "Mediana del sueldo", 
        title = "Mediana del sueldo en el sector formal por provincia marzo 2023",
        caption = str_wrap(caption_medianp, 175)) +
-  geom_text(aes(label = round(median_p, digits = 2), y = median_p + 2), color = "black", 
+  geom_text(aes(label = round(median_p, digits = 2), y = median_p-448), color = "black", 
             size = 3, position = position_dodge(0.9),
             hjust = -0.1) +
   theme(axis.text.y = element_text(hjust = 0)) +
