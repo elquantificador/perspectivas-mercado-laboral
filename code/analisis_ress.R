@@ -197,17 +197,17 @@ graf_median_ciiu <-
 
 # visualizacion del salario mediano-----
 
-graf_median <- ggplot(df_median, aes(fecha_1, sueldo_mediano, color = sector)) +
+graf_median <- ggplot(df_median %>% filter(sector == "Privado"),
+  aes(fecha_1, sueldo_mediano, color = sector)) +
   geom_line() +
   geom_point(color = 'black') +
   scale_x_date(date_breaks = '1 month', 
                date_labels = '%b-%y') +
   labs(x = "",
        y = "",
-       title = "Mediana del sueldo en el sector formal Ecuador 2022-2023",
+       title = "Mediana del sueldo en el sector privado-formal Ecuador 2022-2023",
        caption = str_wrap(caption_median, 175)) +
-  scale_color_manual(values = c("#647A8F","#FFAC8E")) +
-  facet_grid(cols = vars(sector)) +
+  scale_color_manual(values = c("#647A8F")) +
   theme_iess_2 +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
         axis.text.y = element_text(size = 12),
