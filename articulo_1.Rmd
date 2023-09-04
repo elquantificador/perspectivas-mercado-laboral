@@ -74,6 +74,8 @@ knitr::include_graphics('figures/grafico_ciiu.png')
 
 No es de extrañar que el segundo lugar le pertenezca a las industrias energéticas y mineras del Ecuador. Los trabajadores requeridos en estas actividades deben contar con ciertas habilidades técnicas específicas muy escasas, pero altamente demandadas. Es justo mencionar que, a pesar de que las actividades relacionadas con el suministro de energía y extracción de materias primas sea una de las fuentes principales de inversión en el Ecuador, esta no es la que más empleos formales aporta, al tan solo representar el 1.82% del total. Para poner esto en perspectiva, la industria que más empleos aporta es la que tiene que ver con comercio y reparación de vehículos motorizados, significando el 18.8% del total. 
 
+[^1]: CIIU o Clasificación Internacional Industrial Uniforme, es un sistema de clasificación de actividades económicas que se utiliza a nivel internacional para categorizar y organizar diferentes tipos de actividades económicas y empresariales
+
 En contraste, la industria con las remuneraciones más bajas es la que tiene que ver con servicios de comida y alojamientos. Esto puede deberse a la alta competitividad de la industria, lo que genera que los precios sean relativamente bajos. Esto reduce el valor que cada trabajador individual debe aportar, y por tanto, lo que los empleadores están dispuestos a pagar. Por otro lado, las aptitudes necesarias para cumplir con los requerimientos de estos puestos de trabajo no son tan especializadas como las de las industrias de los primeros lugares, además de que la mayoría de empresas que conforman esta industria son microempresas.
 
 # Conclusión 
@@ -87,6 +89,10 @@ Tras analizar los datos presentados, se puede llegar a los siguiente:
 3. Las medianas de salarios más altos se encuentran en provincias amazónicas, al albergar actividades petroleras que son muy rentables y por ende, sus trabajadores obtienen remuneraciones altas. Se debe recalcar que el porcentaje de empleo formal que existe dentro de estas provincias es muy pequeño.  
 
 4.Las industrias que ofrecen mejores salarios son las que tienen que ver con actividades internacionales y con la provisión de energía/extracción de materias primas. En contraste, actividades relacionadas con servicios de comidas y hotelería ofrecen los salarios más bajos. 
+
+Ciertamente, se puede concluir que el desarrollo que el mercado laboral ecuatoriano ha tenido entre 2022 y el primer trimestre del 2023, en términos de puestos de trabajo y salarios no ha sido un desempeño sustancialmente positivo debido a las limitaciones endógenas y exógenas que ha vivido este mercado durante estos últimos años. 
+
+Además, gracias al análisis, se pueden evidenciar la estructura productiva del país. Aunque los sueldos en las provincias principales, como Pichincha o Azuay, donde se concentra un gran número de empleados en el sector formal, son relativamente elevados, no alcanzan los niveles de ciertas provincias amazónicas que representan un porcentaje pequeño en cuanto a empleo formal. Esto se debe a que la industria de extracción de recursos naturales es una de las principales áreas de inversión en Ecuador, lo que concuerda con el hecho de que las actividades relacionadas con la provisión de energía y la extracción de materias primas ofrecen los salarios más elevados en el país.
 
 # Referencias
 
