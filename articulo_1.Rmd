@@ -1,0 +1,96 @@
+---
+title: "Perspectiva sobre el mercado laboral en Ecuador"
+author: "Sebastian Morales"
+date: "2023-09-02"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+bibliography: referencias.bib
+csl: style.csl
+---
+
+```{r setup, include = FALSE}
+# Opciones de chunks
+knitr::opts_chunk$set(echo = F)
+```
+Debido a que el salario percibido por los ciudadanos de un país es un factor fundamental para estimar la calidad de vida, el mercado del trabajo es uno de los tópicos más discutidos en las ciencias sociales. Tomando esto en cuenta, se vuelve importante entender el caso de Ecuador, un país con un problema estructural relacionado con altas tasas de precariedad laboral, donde varios ecuatorianos no pueden acceder a los beneficios del empleo formal como las contribuciones a la seguridad social, los décimos o prestaciones sociales.
+
+Además, las cifras que se pueden obtener del sector informal, no son tan precisas o fiables como las provenientes del sector formal, por lo cual, el análisis del empleo informal es muy complicado. 
+
+Debido a ello, en este artículo se realizará un análisis en base a las estadísticas del Registro Estadístico de Empleo en la Seguridad Social (REES) publicado por el  INEC. Revisaremos la evolución del mercado laboral en Ecuador entre 2022 y 2023, manteniendo el análisis únicamente sobre el sector formal. Nos enfocaremos en el estado de las principales provincias del Ecuador y las respectivas industrias del país con el objetivo de descubrir ¿Qué provincias e industrias son las que aportan más empleos y tienen mejores salarios? y ¿Existe una mejora sustancial en el desempeño del Ecuador en términos de salarios y puestos de trabajo durante este periodo?
+
+# Productividad y la remuneración al trabajo
+
+La productividad es un factor que no puede ignorarse al momento de hablar sobre la remuneración a los trabajadores dentro de una economía de mercado. Según la teoría económica, los salarios, así como cualquier otro precio, se determinan en un mercado mediante la oferta y demanda, donde los empleadores pagan salarios a los trabajadores que sean consistentes con el nivel de productividad (el valor que los trabajadores pueden aportar a la empresa). 
+
+Por ende, las diferencias de productividad conducen a las desigualdades en la distribución de los salarios, haciendo que los trabajadores que pueden aportar más valor al negocio estén mejor remunerados [@george_borjas_labor_2004]. Sin duda la capacidad de crear valor de un trabajador dependerá de su experiencia y educación, pero la productividad suele también depender en factores externos a la empresa, como es la base de clientes, su capacidad de pagar altos precios, entre otros. Por ello, los mercados y políticas laborales deben estar sincronizados con el resto de la economía. A pesar de ello, la relación entre salarios mínimos y productividad en Ecuador ha sido distinta. 
+
+Si se compara la productividad laboral con la evolución del salario mínimo, el escenario en el que nos encontramos es desastroso. La investigación empírica del mercado laboral encontró que a partir del 2014 debido a la rigidez laboral derivada de algunos factores como la política salarial, la disparidad entre salarios y productividad del sector formal, ha sido cada vez menos sostenible [@carlos_uribe_economia_2022]. En otras palabras, los costos laborales han incrementado de sobremanera, mientras que la productividad laboral con la que se producen bienes y servicios ha caído en los últimos años. 
+
+# Regulación Laboral
+
+Lamentablemente no ha existido ninguna reforma relacionada con el funcionamiento del mercado laboral ecuatoriano dentro de los últimos años. Un potencial problema estructural que impide que la mayoría de personas puedan acceder a un empleo formal encuentra su origen en la rigidez del mercado laboral. Se ha argumentado que “la estructura regulatoria del mercado laboral en Ecuador tiene varios elementos que funcionan como mecanismos de exclusión” [@carlos_uribe_economia_2022]. En otras palabras, la manera en la que se han llevado históricamente las reformas y regulaciones de leyes relacionadas con el mercado laboral han limitado el acceso de varios trabajadores al sector formal y ha contribuido de gran manera a crear el problema estructural para la economía ecuatoriana. 
+
+Relacionado con esto, se debe recordar que Ecuador posee uno de los salarios mínimos más altos de la región, pero también tiene, como se señaló previamente, un problema con la baja productividad. Es así que ocurre un problema de competitividad del mercado laboral ecuatoriano. Como existe un salario mínimo fijado por ley alto en comparación a la productividad laboral, entonces los trabajadores menos productivos y/o cualificados tendrán una barrera que les impedirá acceder a un empleo en el sector formal ya que en muchos casos, no podrán cumplir con los estándares productivos a esos niveles de salarios. Con esto no se quiere decir que es malo que los trabajadores consigan altos salarios, sino que se debe tener una amplia perspectiva de todas las personas que conforman la población económicamente activa (PEA), de las cuales, la mayoría se encuentra en la informalidad.
+
+Pero, aquí se debe mencionar que existen otros análisis que van en otra dirección, pues algunos economistas y organizaciones alegan en contra de la desregulación y flexibilización del mercado laboral como solución al desempleo o al crecimiento económico. Dichas aseveraciones se basan en que no existe evidencia que sea lo suficientemente robusta o concluyente sobre los problemas que pueden ocasionar las regulaciones sobre el mercado laboral. Con estas dos visiones, está claro que existe un debate que está lejos de ser solucionado. Los datos no son concluyentes para ninguna de las partes, sino que otorga una respuesta ambigua sobre la validez ambas perspectivas.[@freeman_labour_2005]. 
+
+# La evolución del empleo en el sector formal
+
+```{r}
+knitr::include_graphics('figures/grafico_empleo_tot.png')
+```
+
+Con todo esto en mente, se puede analizar la evolución del número de empleos registrados en la seguridad social.  En 2022 se tuvo una tendencia creciente, alcanzando en diciembre 2.806.988 personas inscritas. En contraste, para el primer trimestre de 2023, esta serie experimentó una leve caída del 0,4% o un decremento de 11.407 personas inscritas. Es importante destacar que no se puede inferir que esa disminución se debió a la subida del SBU en 2023, pues Ecuador está atravesando por una serie de problemas adicionales, los cuales podrían haber influido en el desarrollo de este primer trimestre y que van desde la inestabilidad política hasta la inseguridad. 
+
+Ciertamente, es posible argumentar que la lenta recuperación económica y los problemas estructurales del mercado laboral podrían haber restringido el rendimiento del sector formal durante este periodo. Esta afirmación se fundamenta en el hecho de que la mayoría de los ecuatorianos que forman parte de la Población Económicamente Activa (PEA) aún se encuentran trabajando en la economía informal. A lo largo de los años, esta situación no ha experimentado una reversión significativa, lo que sugiere que persisten dificultades en la creación de empleos formales y en el acceso a trabajos estables y protegidos por la legislación laboral. Estos factores contribuyen a la complejidad de la situación económica y laboral del país y podrían estar limitando el desarrollo del sector formal.
+
+# El nivel de sueldo a lo largo del tiempo
+
+```{r}
+knitr::include_graphics('figures/grafico_median.png')
+```
+
+Para observar la evolución de la mediana del salario en Ecuador, se tomó en cuenta únicamente al sector privado debido a que la variación de los salarios del sector público es mínima. Además, estos salarios no siempre están en función de los cambios en el mercado, por lo que la decisión de qué salarios pagar en dicho sector podría estar desconectada de los salarios del sector privado donde se encuentran la mayoría de plazas de trabajo en el sector formal.
+
+Se observa que la mediana de los salarios en el sector privado ha experimentado un crecimiento discreto en este periodo de tiempo. En marzo del 2022, la mediana de los salarios fue de $463,67 mientras que, en marzo de 2023, ese mismo valor fue de $500. En términos de porcentajes, la mediana del salario de los trabajadores privados ha crecido un 7,82%. 
+
+Las causas detrás de esta situación pueden deberse al problema de la baja productividad que se mencionó anteriormente. En otras palabras, los salarios medianos de los trabajadores privados del sector formal han experimentado un bajo crecimiento, entre otros factores como la lenta recuperación económica.
+
+```{r}
+knitr::include_graphics('figures/grafico_median_p.png')
+```
+
+En relación a las provincias más grandes del Ecuador que registran mejores medianas de salarios, tenemos a Pichincha, Azuay y Guayas, debido que estas son centros neurálgicos de este país, donde se desarrollan y concentran muchas actividades productivas tanto del sector privado como público. No obstante, también es importante analizar el aparentemente alto salario de las provincias amazónicas.
+
+Por ejemplo, Zamora Chinchipe o Morona Santiago registran cifras de $733 y $675 respectivamente. Tomando siempre en cuenta que los datos analizados aquí están limitados a los del sector formal, el aparentemente alto salario de los trabajadores amazónicos responde a aquellos que están trabajando en la industria del petróleo, que tiene compensaciones salariales eminentemente mayores. En comparación a las grandes provincias del Ecuador, que agrupan un gran número de industrias, es entendible que los resultados de las provincias amazónicas sean mayor. Por ejemplo, Pichincha dispone de una mediana del salario de $600, que se ve superado por las provincias de Zamora Chinchipe y Morona Santiago. Sin embargo, las grandes provincias son las que más empleo generan en el país, con Pichincha representando el 33% de todo el empleo formal del Ecuador, Guayas con 28% y Azuay con el 6%, en tanto que la suma de empleos de las cinco provincias amazónicas presentadas, representan en total el 3,1% de todo el empleo formal. 
+
+Las industrias que registran mejores resultados son, en primer lugar, organizaciones extraterritoriales. Estas organizaciones, principalmente conformadas por embajadas y ONGs internacionales, en su mayoría cuentan con personal que aparte de estar bien calificado, es personal extranjero, a los que se les pagan remuneraciones altas. Esto se debe a que las remuneraciones pagadas en otros países responden a la productividad de dichos países, que suele ser significativamente mayor a la productividad ecuatoriana. Sin embargo, es importante considerar que la industria de organizaciones extranjeras no aporta tantos empleos al país: en marzo del 2023, esta industria constituye solo un 0.01% del empleo global. 
+
+```{r}
+knitr::include_graphics('figures/grafico_ciiu.png')
+```
+
+No es de extrañar que el segundo lugar le pertenezca a las industrias energéticas y mineras del Ecuador. Los trabajadores requeridos en estas actividades deben contar con ciertas habilidades técnicas específicas muy escasas, pero altamente demandadas. 
+
+Es justo mencionar que, a pesar de que las actividades relacionadas con el suministro de energía y extracción de materias primas sea una de las fuentes principales de inversión en el Ecuador, esta no es la que más empleos formales aporta, al tan solo representar el 1.82% del total. Para poner esto en perspectiva, la industria que más empleos aporta es la que tiene que ver con: comercio; reparación de vehículos motorizados, significando el 18.8% del total. 
+
+En contraste, la industria con peores remuneraciones es la que tiene que ver con servicios de comida y alojamientos. Esto puede deberse a la alta competitividad de la industria, lo que genera que los precios sean relativamente bajos. Esto reduce el valor que cada trabajador individual debe aportar, y por tanto, lo que los empleadores están dispuestos a pagar. Por otro lado, las aptitudes necesarias para cumplir con los requerimientos de estos puestos de trabajo no son tan especializadas como las de las industrias de los primeros lugares, además de que la mayoría de empresas que conforman esta industria son microempresas.
+
+# Conclusión 
+
+Tras analizar los datos presentados, se puede llegar a los siguiente:
+
+1.Pese a que el número de personas que cuentan con un empleo registrado en la seguridad social ha crecido entre 2022 y el primer trimestre de 2023, ese desempeño no ha sido suficiente para asegurar que la mayoría de los trabajadores puedan acceder al sector formal. Ecuador  tiene pendiente una reforma laboral más aterrizada, que tenga como punto principal la estimulación de los factores que hacen posible la productividad. Que tome en cuenta que muchos trabajadores se encuentran en el sector informal y que la rigidez laboral hace que sea muy difícil que estas personas puedan conseguir alguna plaza dentro del sector formal.
+
+2.Las provincias más grandes del Ecuador que tienen medianas de salarios más altos son Pichincha, Azuay y Guayas, principalmente gracias a que son puntos estratégicos que reúnen a una gran cantidad de personas, por lo que varias empresas, conglomerados comerciales e instituciones públicas, desarrollan sus actividades en estos lugares. 
+
+3.Las medianas de salarios más altos se encuentran en provincias amazónicas, al albergar actividades petroleras que son muy rentables y por ende, sus trabajadores obtienen remuneraciones altas. Pero se debe recalcar que el porcentaje de empleo formal que existe dentro de estas provincias es muy pequeño.  
+
+4.Las industrias que ofrecen mejores salarios, son las que tienen que ver con actividades internacionales y con la provisión de energía/extracción de materias primas. En contraste, actividades relacionadas con servicios de comidas y hotelería, ofrecen los salarios más bajos. 
+
+# Referencias
+
+
+
