@@ -1,6 +1,6 @@
 ---
 title: "Perspectiva sobre el mercado laboral en Ecuador"
-author: "Sebastian Morales"
+author: "Sebastián Morales"
 date: "2023-09-02"
 output:
   html_document: default
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = F)
 ```
 Debido a que el salario percibido por los ciudadanos de un país es un factor fundamental para estimar la calidad de vida, el mercado del trabajo es uno de los tópicos más discutidos en las ciencias sociales. Tomando esto en cuenta, se vuelve importante entender el caso de Ecuador, un país con un problema estructural de altas tasas de precariedad laboral, donde varios ecuatorianos no pueden acceder a los beneficios del empleo formal como las contribuciones a la seguridad social, los salarios adicionales (*décimos*) y beneficios adicionales.
 
-Las cifras que se pueden obtener del sector informal no son tan precisas como las provenientes del sector formal por lo cual el análisis del empleo informal es muy complicado. Debido a ello, en este artículo se realizará un análisis en base a las estadísticas del Registro Estadístico de Empleo en la Seguridad Social (REES), publicado por el  INEC. Esta base de datos guarda información sobre todas las personas registradas en la seguridad social con información sobre sus contratos laborales, lo que permite un análisis preciso y potente sobre la situación del mercado formal en el país. 
+Las cifras que se pueden obtener del sector informal no son tan precisas como las provenientes del sector formal por lo cual el análisis del empleo informal es muy complicado. Debido a ello, en este artículo se realizará un análisis en base a las estadísticas del Registro Estadístico de Empleo en la Seguridad Social (REESS), publicado por el  INEC. Esta base de datos guarda información sobre todas las personas registradas en la seguridad social con información sobre sus contratos laborales, lo que permite un análisis preciso y potente sobre la situación del mercado formal en el país. 
 
 En este artículo, se analizará la evolución del mercado laboral en Ecuador entre 2022 y 2023. El enfoque está en el estado de las principales provincias del Ecuador y las respectivas industrias del país, con el objetivo de descubrir ¿Qué provincias e industrias son las que aportan más empleos y tienen mejores salarios? y ¿Existe una mejora sustancial en el desempeño del Ecuador en términos de salarios y puestos de trabajo durante este periodo?
 

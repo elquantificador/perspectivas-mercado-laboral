@@ -1,4 +1,4 @@
-# Descarga de base de datos del Registro de Empleo en la Seguridad Social
+# Descarga de base de datos del Registro Estadístico de Empleo en la Seguridad Social
 # El Quantificador 2023
 
 # Preliminares --------------------------------------------------------------------------------------------
