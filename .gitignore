@@ -2,4 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-data/base_iess.RData
+data/base_iess.RDat
+data/

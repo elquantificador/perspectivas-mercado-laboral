@@ -7,7 +7,6 @@
 
 if(!require(googledrive)) install.packages("googledrive")
 
-
 # Descarga de datos ------------------------------------------------------------------------------------------
 
 # Creamos un directorio temporal
