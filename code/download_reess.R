@@ -55,3 +55,20 @@ for (i in seq_along(github_urls)) {
                 method = "libcurl")
   cat(paste("Downloaded", dest_files[i], "\n"))
 }
+
+# Cargar y juntar ---------------------------------------------------------
+
+# Lista de todos los archivos del 2022 al 23
+
+list_csv_files <-
+  list.files(path = 'data/',
+             full.names = T,
+             pattern = '*.csv')
+
+# Leer todos los archivos
+
+ress_raw <-
+  readr::read_csv(list_csv_files,
+                  id = 'file_name')
+
+

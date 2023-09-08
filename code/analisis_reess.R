@@ -18,11 +18,9 @@ if(!require(webp)) install.packages("webp", repos = "http://cran.us.r-project.or
 
 # Cargando datos ------------------------------------------------------------------------------------------
 
-source("code/ress_download.R")
+# Ejecutar script de descarga, revisar codigo para mas información
 
-# Guardar la base de datos en la computadora con save(ress_raw, file = 'data/base_iess.RData')
-# Si no se ejecuta el codigo por si solo ejecutar parte por parte siguiendo instrucciones dentro del script ress_download.R
-# Cargar la base de datos del archivo Rdata con load('data/base_iess.Rdata')
+source("code/download_reess.R")
 
 # theme -----
 
