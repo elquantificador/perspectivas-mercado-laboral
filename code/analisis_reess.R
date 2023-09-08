@@ -13,6 +13,8 @@ if(!require(lubridate)) install.packages("lubridate", repos = "http://cran.us.r-
 if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
 if(!require(patchwork)) install.packages("patchwork", repos = "http://cran.us.r-project.org")
 if(!require(scales)) install.packages("scales", repos = "http://cran.us.r-project.org")
+if(!require(png)) install.packages("png", repos = "http://cran.us.r-project.org")
+if(!require(webp)) install.packages("webp", repos = "http://cran.us.r-project.org")
 
 # Cargando datos ------------------------------------------------------------------------------------------
 
@@ -28,8 +30,14 @@ theme_iess_2 <-
   theme_bw() +
   theme(panel.grid = element_blank(),
         plot.caption = element_text(hjust = 0, face = 'italic'),
-        legend.background = element_rect(fill="white", size=0.5, linetype="solid", colour ="black"),
-        text =  element_text(color = 'black', size = 12))
+        legend.background = element_rect(fill="white", 
+                                         size=0.5, 
+                                         linetype="solid", 
+                                         colour ="black"),
+        text =  element_text(color = 'black', 
+                             size = 14),
+        axis.text = element_text(size = 12,
+                                 color = 'black'))
 
 # captions -----
 
@@ -185,15 +193,16 @@ graf_median_ciiu <-
   labs(x = "", 
        y = "Mediana del sueldo", 
        title = "Mediana del sueldo en el sector formal por industria",
-       caption = str_wrap(caption_ciiu, 175)) +
+       caption = str_wrap(caption_ciiu, 160)) +
   geom_text(aes(label = round(mediana_sueldo, digits = 2),
                 y = mediana_sueldo + 2), color = "black", 
             size = 3, position = position_dodge(0.9),
             hjust = -0.1) +
-  theme(axis.text.y = element_text(hjust = 0)) +
   theme_iess_2 +
   theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank())
+        axis.ticks.x = element_blank(),
+        plot.caption.position = 'plot',
+        axis.text.y = element_text(hjust = 0))
 
 # visualizacion del salario mediano-----
 
@@ -206,12 +215,13 @@ graf_median <- ggplot(df_median %>% filter(sector == "Privado"),
   labs(x = "",
        y = "",
        title = "Mediana del sueldo en el sector privado-formal Ecuador 2022-2023",
-       caption = str_wrap(caption_median, 175)) +
+       caption = str_wrap(caption_median, 160)) +
   scale_color_manual(values = c("#647A8F")) +
   theme_iess_2 +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
-        axis.text.y = element_text(size = 12),
-        legend.position = "none")
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, size = 12, color = 'black'),
+        axis.text.y = element_text(size = 12, color = 'black'),
+        legend.position = "none",
+        plot.caption.position = 'plot')
 
 # visualizacion del salario mediano por provincia-----
 
@@ -225,14 +235,15 @@ graf_median_p <-
   labs(x = "", 
        y = "Mediana del sueldo", 
        title = "Mediana del sueldo en el sector formal por provincia marzo 2023",
-       caption = str_wrap(caption_medianp, 175)) +
+       caption = str_wrap(caption_medianp, 160)) +
   geom_text(aes(label = round(median_p, digits = 2), y = median_p-448), color = "black", 
             size = 3, position = position_dodge(0.9),
             hjust = -0.1) +
-  theme(axis.text.y = element_text(hjust = 0)) +
   theme_iess_2 +
   theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank())
+        axis.ticks.x = element_blank(),
+        axis.text.y = element_text(hjust = 0, size = 12, color = 'black'),
+        plot.caption.position = 'plot')
 
 # visualizacion del numero de empleos formales-----
 
@@ -244,33 +255,39 @@ graf_empleo <- ggplot(df_empleo, aes(fecha_1, empleo)) +
   labs(x = "",
        y = "",
        title = "Evolución del número de empleos registrados en la seguridad social 2022-2023",
-       caption = str_wrap(caption_totempl, 175)) +
+       caption = str_wrap(caption_totempl, 160)) +
   theme_iess_2 +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
-        axis.text.y = element_text(size = 12))
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, color = 'black'),
+        axis.text.y = element_text(size = 12, colour = 'black'),
+        plot.caption.position = 'plot')
 
 # guardando los graficos-----
 
-ggsave("figures/grafico_ciiu.png", plot = graf_median_ciiu,
+ggsave("figures/grafico_median.png", 
+       plot = graf_median,
        device = "png",
-       width = 14,
-       height = 7,
-       dpi =1200)
+       width = 12,
+       height = 8,
+       dpi = 1200)
 
-ggsave("figures/grafico_median.png", plot = graf_median,
+ggsave("figures/grafico_median_p.png", 
+       plot = graf_median_p,
        device = "png",
-       width = 13,
-       height = 7,
-       dpi =1200)
+       width = 12,
+       height = 8,
+       dpi = 1200)
 
-ggsave("figures/grafico_median_p.png", plot = graf_median_p,
+ggsave("figures/grafico_ciiu.png", 
+       plot = graf_median_ciiu,
        device = "png",
-       width = 13,
-       height = 7,
-       dpi =1200)
+       width = 12,
+       height = 8,
+       dpi = 1200)
 
-ggsave("figures/grafico_empleo_tot.png", plot = graf_empleo,
+ggsave("figures/grafico_empleo_tot.png", 
+       plot = graf_empleo,
        device = "png",
-       width = 13,
-       height = 7,
-       dpi =1200)
+       width = 12,
+       height = 8,
+       dpi = 1200)
+
