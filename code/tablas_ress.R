@@ -61,3 +61,17 @@ df_ciiu <-
 
 write.xlsx(df_ciiu, "df_ciiu.xlsx")
 
+# Base para la evolucion de la tasa de empleo formal por sector-----
+
+df_empleo_1 <- 
+  df_raw %>%
+  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
+  group_by(fecha_1) %>%
+  summarise(empleo = n())
+
+# Exportar df_empleo_1 a Excel
+
+write.xlsx(df_empleo_1, "df_empleo_1.xlsx")
+
+
+
