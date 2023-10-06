@@ -1,0 +1,63 @@
+# Analisis empleo por ciiu
+
+# Preliminares --------------------------------------------------------------------------------------------
+
+# Cargar librerias
+
+if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
+if(!require(readxl)) install.packages("readxl", repos = "http://cran.us.r-project.org")
+if(!require(ggplot2)) install.packages("ggplot2", repos = "http://cran.us.r-project.org")
+if(!require(readr)) install.packages("readr", repos = "http://cran.us.r-project.org")
+if(!require(forcats)) install.packages("forcats", repos = "http://cran.us.r-project.org")
+if(!require(lubridate)) install.packages("lubridate", repos = "http://cran.us.r-project.org")
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(patchwork)) install.packages("patchwork", repos = "http://cran.us.r-project.org")
+if(!require(scales)) install.packages("scales", repos = "http://cran.us.r-project.org")
+if(!require(png)) install.packages("png", repos = "http://cran.us.r-project.org")
+if(!require(webp)) install.packages("webp", repos = "http://cran.us.r-project.org")
+if(!require(openxlsx)) install.packages("openxlsx", repos = "http://cran.us.r-project.org")
+
+# Análisis ------------------------------------------------------------------------------------------------
+
+df_ress <- 
+  ress_raw %>%  
+  select(ano, mes, provincia, edad, sueldo , dias, empleo_total, ciiu4_1, empleo) %>% 
+  filter(provincia %in% seq(1:24), sueldo>0) %>%
+  mutate(ciiu4_1_fct = as.factor(ciiu4_1)) 
+
+# agrupando la base por actividad productiva -----
+
+df_ciiu <- 
+  df_raw %>% 
+  filter(ano == 2023, mes == 3) %>% 
+  mutate(ciiu4_1_fct = fct_collapse(ciiu4_1_fct,
+                                    "Agricultura, ganadería,  silvicultura y pesca" = "A",
+                                    "Explotación de minas y canteras" = "B",
+                                    "Industrias manufactureras" = "C",
+                                    "Suministro de electricidad, gas, vapor y aire acondicionado" = "D",
+                                    "Distribución de agua; alcantarillado, gestión de desechos y actividades de saneamiento." = "E",
+                                    "Construcción" = "F",
+                                    "Comercio al por mayor y al por menor; reparación de vehículos automotores y motocicletas" = "G",
+                                    "Transporte y almacenamiento" = "H",
+                                    "Actividades de alojamiento y de servicio de comidas" = "I",
+                                    "Información y comunicación" = "J",
+                                    "Actividades financieras y de seguros" = "K",
+                                    "Actividades inmobiliarias" = "L",
+                                    "Actividades profesionales, científicas y técnicas" = "M",
+                                    "Actividades de servicios administrativos y de apoyo" = "N",
+                                    "Administración pública y defensa; planes de seguridad social de afiliación obligatoria" = "O",
+                                    "Enseñanza" = "P",
+                                    "Actividades de atención de la salud humana y de asistencia social" = "Q",
+                                    "Artes, entretenimiento y recreación" = "R",
+                                    "Otras actividades de servicios" = "S",
+                                    "Actividades de los hogares como empleadores; actividades no diferenciadas de los hogares como productores de bienes y servicios para uso propio" = "T",
+                                    "Organizaciones internacionales" = "U",
+                                    "Otro" = "Z0_Nocla_CIIU")) %>%
+  group_by(ciiu4_1_fct) %>% 
+  summarize(empleo = n()) %>%
+  mutate(porcentaje_empleo = empleo/sum(empleo)*100) 
+
+# Exportar df_ciiu a Excel
+
+write.xlsx(df_ciiu, "df_ciiu.xlsx")
+
