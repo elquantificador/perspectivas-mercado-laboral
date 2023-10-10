@@ -7,5 +7,5 @@ Este es el repositorio contiene archivos relacionados al artículo del Quantific
 Code: dos archivos de R.Script que contienen el análisis  de la base de datos RESS y el código necesario para la descarga de la base de datos.
 
 Figures: Las imágenes utilizadas en el artículo.
-para replicar el análisis:
+para replicar el análisis.
 
