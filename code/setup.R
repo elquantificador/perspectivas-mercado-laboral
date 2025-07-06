@@ -1,8 +1,8 @@
-# Setup script for R package installation and loading
+# CONFIGURACIÓN DE PAQUETES
 # Perspectivas sobre el mercado laboral - El Quantificador 2023
 # 
-# This script consolidates all package dependencies for the project
-# and provides a single source of truth for package management.
+# Este script consolida todas las dependencias de paquetes del proyecto
+# y proporciona una fuente única de verdad para la gestión de paquetes.
 
 # Function to install and load packages efficiently
 install_and_load_packages <- function(packages) {
@@ -14,24 +14,24 @@ install_and_load_packages <- function(packages) {
   }
 }
 
-# List of required packages for the project
+# Lista de paquetes requeridos para el proyecto
 required_packages <- c(
-  "tidyverse",    # includes dplyr, ggplot2, readr, forcats, lubridate, and more
-  "readxl",       # for reading Excel files
-  "patchwork",    # for combining plots
-  "scales",       # for scaling and formatting
-  "png",          # for PNG image handling
-  "webp",         # for WebP image handling
-  "openxlsx"      # for writing Excel files
+  "tidyverse",    # incluye dplyr, ggplot2, readr, forcats, lubridate, y más
+  "readxl",       # para leer archivos Excel
+  "patchwork",    # para combinar gráficos
+  "scales",       # para escalas y formato
+  "png",          # para manejo de imágenes PNG
+  "webp",         # para manejo de imágenes WebP
+  "openxlsx"      # para escribir archivos Excel
 )
 
-# Install and load all required packages
-cat("Installing and loading required packages...\n")
+# Instalar y cargar todos los paquetes requeridos
+cat("Instalando y cargando paquetes requeridos...\n")
 install_and_load_packages(required_packages)
-cat("All packages loaded successfully!\n")
+cat("¡Todos los paquetes cargados exitosamente!\n")
 
-# Print package versions for reproducibility
-cat("\nLoaded package versions:\n")
+# Imprimir versiones de paquetes para reproducibilidad
+cat("\nVersiones de paquetes cargados:\n")
 for (pkg in required_packages) {
   cat(sprintf("- %s: %s\n", pkg, packageVersion(pkg)))
 }

@@ -1,6 +1,26 @@
+# R specific files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
-data/base_iess.RDat
+
+# Data files (auto-generated)
 data/
+*.RDat
+
+# Generated output files
+figures/*.png
+figures/*.jpg
+figures/*.jpeg
+figures/*.webp
+
+# Excel files (auto-generated)
+*.xlsx
+
+# HTML output files
+*.html
+
+# System files
+desktop.ini
+.DS_Store
+Thumbs.db

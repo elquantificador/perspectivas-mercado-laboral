@@ -1,4 +1,8 @@
-# Repositorio REES
+# ANÁLISIS DE DATOS REESS
+# Perspectivas sobre el mercado laboral - El Quantificador 2023
+# 
+# Este script realiza el análisis principal de los datos del Registro Estadístico
+# de Empleo en la Seguridad Social (REESS) y genera las visualizaciones
 
 # Preliminares --------------------------------------------------------------------------------------------
 

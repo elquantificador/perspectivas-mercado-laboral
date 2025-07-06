@@ -1,5 +1,7 @@
 # Descarga de base de datos del Registro Estadístico de Empleo en la Seguridad Social
-# El Quantificador 2023
+# Perspectivas sobre el mercado laboral - El Quantificador 2023
+# 
+# Este script descarga automáticamente los datos del REESS desde el repositorio de GitHub
 
 # Preliminares ------------------------------------------------------------
 

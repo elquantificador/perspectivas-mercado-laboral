@@ -1,4 +1,7 @@
-# Analisis empleo por ciiu
+# GENERACIÓN DE TABLAS POR CIIU
+# Perspectivas sobre el mercado laboral - El Quantificador 2023
+# 
+# Este script genera tablas de resumen y análisis por sectores CIIU
 
 # Preliminares --------------------------------------------------------------------------------------------
 
