@@ -27,6 +27,8 @@ perspectivas-mercado-laboral/
 ├── articulo_1.html        # Artículo renderizado en HTML
 ├── referencias.bib        # Referencias bibliográficas
 ├── style.csl             # Estilo de citación
+├── perspectivas-mercado-laboral.Rproj # Archivo del proyecto R
+├── LICENSE               # Licencia del proyecto
 ├── *.xlsx                # Archivos Excel generados
 └── README.md             # Este archivo
 ```
@@ -160,6 +162,8 @@ Al completar la ejecución, se generarán los siguientes archivos:
 - `grafico_empleo_tot.png`: Evolución del empleo formal total
 
 ### Tablas de datos (`*.xlsx`)
+**Nota**: Estos archivos se generan automáticamente al ejecutar los scripts y no se incluyen en el repositorio.
+
 - `df_ciiu.xlsx`: Empleo por sector industrial (marzo 2023)
 - `df_empleo_ciiu.xlsx`: Evolución del empleo por sector CIIU
 - `df_empleo_1.xlsx`: Datos de empleo procesados
@@ -234,6 +238,17 @@ Para garantizar resultados idénticos:
 3. Verificar las versiones de paquetes mostradas en consola
 
 ## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## Cómo citar
+
+Si utilizas este código o análisis en tu trabajo académico o profesional, por favor cita:
+
+```
+El Quantificador. (2023). Perspectivas sobre el mercado laboral: ¿dónde están los mejores sueldos del país?. 
+GitHub. https://github.com/elquantificador/perspectivas-mercado-laboral
+```
 
 Este proyecto está bajo los términos de la licencia especificada en el repositorio.
 
