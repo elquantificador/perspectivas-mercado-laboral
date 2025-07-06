@@ -1,51 +1,54 @@
 # Descarga de base de datos del Registro Estadístico de Empleo en la Seguridad Social
 # El Quantificador 2023
+#
+# NOTA: Las URLs y nombres de archivos se generan dinámicamente basándose en la
+# configuración de períodos de tiempo. Para añadir nuevos meses/años, simplemente
+# actualizar las variables start_year, start_month, end_year, end_month más abajo.
 
 # Preliminares ------------------------------------------------------------
 
 
 # Descargar ---------------------------------------------------------------
 
-# Lista de URLs en GitHub
+# Configuración de períodos de datos - actualizar estas variables para añadir nuevos períodos
+# Para añadir nuevos meses/años, simplemente modificar estas variables
+start_year <- 2022
+start_month <- 1
+end_year <- 2023
+end_month <- 3
 
-github_urls <- c(
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_1.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_2.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_3.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_4.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_5.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_6.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_7.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_8.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_9.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_10.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_11.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_12.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2023_1.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2023_2.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2023_3.csv'
+# Patrón base de URL para el repositorio de GitHub
+base_url <- "https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS"
+
+# Generar combinaciones año-mes dinámicamente
+# Este código maneja automáticamente las transiciones entre años
+year_months <- c()
+for (year in start_year:end_year) {
+  # Determinar el rango de meses para cada año
+  if (year == start_year && year == end_year) {
+    # Caso de un solo año
+    months <- start_month:end_month
+  } else if (year == start_year) {
+    # Primer año: desde start_month hasta 12
+    months <- start_month:12
+  } else if (year == end_year) {
+    # Último año: desde 1 hasta end_month
+    months <- 1:end_month
+  } else {
+    # Años intermedios: todos los meses
+    months <- 1:12
+  }
   
-)
+  # Añadir combinaciones año_mes
+  for (month in months) {
+    year_months <- c(year_months, paste(year, month, sep = "_"))
+  }
+}
 
-# Nombres para archivos de descarga
-
-dest_files <- c(
-  'data/REESS_2022_1.csv',
-  'data/REESS_2022_2.csv',
-  'data/REESS_2022_3.csv',
-  'data/REESS_2022_4.csv',
-  'data/REESS_2022_5.csv',
-  'data/REESS_2022_6.csv',
-  'data/REESS_2022_7.csv',
-  'data/REESS_2022_8.csv',
-  'data/REESS_2022_9.csv',
-  'data/REESS_2022_10.csv',
-  'data/REESS_2022_11.csv',
-  'data/REESS_2022_12.csv',
-  'data/REESS_2023_1.csv',
-  'data/REESS_2023_2.csv',
-  'data/REESS_2023_3.csv'
-)
+# Generar URLs y nombres de archivos de destino dinámicamente
+# Estas listas se crean automáticamente basándose en la configuración de arriba
+github_urls <- paste0(base_url, "_", year_months, ".csv")
+dest_files <- paste0("data/REESS_", year_months, ".csv")
 
 # Descargar todos
 
