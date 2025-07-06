@@ -2,20 +2,8 @@
 
 # Preliminares --------------------------------------------------------------------------------------------
 
-# Cargar librerias
-
-if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
-if(!require(readxl)) install.packages("readxl", repos = "http://cran.us.r-project.org")
-if(!require(ggplot2)) install.packages("ggplot2", repos = "http://cran.us.r-project.org")
-if(!require(readr)) install.packages("readr", repos = "http://cran.us.r-project.org")
-if(!require(forcats)) install.packages("forcats", repos = "http://cran.us.r-project.org")
-if(!require(lubridate)) install.packages("lubridate", repos = "http://cran.us.r-project.org")
-if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
-if(!require(patchwork)) install.packages("patchwork", repos = "http://cran.us.r-project.org")
-if(!require(scales)) install.packages("scales", repos = "http://cran.us.r-project.org")
-if(!require(png)) install.packages("png", repos = "http://cran.us.r-project.org")
-if(!require(webp)) install.packages("webp", repos = "http://cran.us.r-project.org")
-if(!require(openxlsx)) install.packages("openxlsx", repos = "http://cran.us.r-project.org")
+# Cargar librerias - usar setup centralizado
+source("code/setup.R")
 
 # Análisis ------------------------------------------------------------------------------------------------
 
