@@ -6,46 +6,60 @@
 
 # Descargar ---------------------------------------------------------------
 
-# Lista de URLs en GitHub
+# Configuración de datos a descargar
+# Para agregar nuevos períodos, actualizar estas variables:
+# - Agregar años a download_years
+# - Actualizar download_months con los meses disponibles para cada año
 
-github_urls <- c(
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_1.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_2.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_3.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_4.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_5.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_6.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_7.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_8.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_9.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_10.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_11.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2022_12.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2023_1.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2023_2.csv',
-  'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/BDD_REESS_2023_3.csv'
+download_years <- c(2022, 2023)
+download_months <- list(
+  "2022" = 1:12,  # Todos los meses de 2022
+  "2023" = 1:3    # Primeros 3 meses de 2023
+)
+
+# URLs base para la descarga
+base_url <- 'https://media.githubusercontent.com/media/laboratoriolide/datos-reess/main/data/'
+dest_dir <- 'data/'
+
+# Generar URLs y archivos de destino dinámicamente
+# Esta función crea las listas de URLs y archivos de destino basándose en la configuración
+
+generate_download_lists <- function(years, months_list, base_url, dest_dir) {
+  urls <- c()
+  dest_files <- c()
   
-)
+  for (year in years) {
+    year_str <- as.character(year)
+    months <- months_list[[year_str]]
+    
+    for (month in months) {
+      # Generar URL: BDD_REESS_YYYY_M.csv
+      url <- paste0(base_url, 'BDD_REESS_', year, '_', month, '.csv')
+      urls <- c(urls, url)
+      
+      # Generar archivo de destino: REESS_YYYY_M.csv
+      dest_file <- paste0(dest_dir, 'REESS_', year, '_', month, '.csv')
+      dest_files <- c(dest_files, dest_file)
+    }
+  }
+  
+  return(list(urls = urls, dest_files = dest_files))
+}
 
-# Nombres para archivos de descarga
+# Generar listas de URLs y archivos de destino
+download_lists <- generate_download_lists(download_years, download_months, base_url, dest_dir)
+github_urls <- download_lists$urls
+dest_files <- download_lists$dest_files
 
-dest_files <- c(
-  'data/REESS_2022_1.csv',
-  'data/REESS_2022_2.csv',
-  'data/REESS_2022_3.csv',
-  'data/REESS_2022_4.csv',
-  'data/REESS_2022_5.csv',
-  'data/REESS_2022_6.csv',
-  'data/REESS_2022_7.csv',
-  'data/REESS_2022_8.csv',
-  'data/REESS_2022_9.csv',
-  'data/REESS_2022_10.csv',
-  'data/REESS_2022_11.csv',
-  'data/REESS_2022_12.csv',
-  'data/REESS_2023_1.csv',
-  'data/REESS_2023_2.csv',
-  'data/REESS_2023_3.csv'
-)
+# Mostrar información sobre los archivos a descargar
+cat("Archivos a descargar:\n")
+cat("- Años:", paste(download_years, collapse = ", "), "\n")
+for (year in download_years) {
+  year_str <- as.character(year)
+  months <- download_months[[year_str]]
+  cat("- Meses", year_str, ":", paste(months, collapse = ", "), "\n")
+}
+cat("- Total de archivos:", length(github_urls), "\n\n")
 
 # Descargar todos
 
