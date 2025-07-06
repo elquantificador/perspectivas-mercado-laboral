@@ -4,17 +4,7 @@
 
 # Cargar librerias
 
-if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
-if(!require(readxl)) install.packages("readxl", repos = "http://cran.us.r-project.org")
-if(!require(ggplot2)) install.packages("ggplot2", repos = "http://cran.us.r-project.org")
-if(!require(readr)) install.packages("readr", repos = "http://cran.us.r-project.org")
-if(!require(forcats)) install.packages("forcats", repos = "http://cran.us.r-project.org")
-if(!require(lubridate)) install.packages("lubridate", repos = "http://cran.us.r-project.org")
-if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
-if(!require(patchwork)) install.packages("patchwork", repos = "http://cran.us.r-project.org")
-if(!require(scales)) install.packages("scales", repos = "http://cran.us.r-project.org")
-if(!require(png)) install.packages("png", repos = "http://cran.us.r-project.org")
-if(!require(webp)) install.packages("webp", repos = "http://cran.us.r-project.org")
+source("code/utils.R")
 
 # Cargando datos ------------------------------------------------------------------------------------------
 
@@ -64,48 +54,19 @@ df_raw <-
   ress_raw %>%  
   select(ano, mes, provincia, edad, sueldo , dias, empleo_total, ciiu4_1, empleo) %>% 
   filter(provincia %in% seq(1:24), sueldo>0, empleo_total %in% c(1,2)) %>%
-  mutate(sector = factor(empleo_total, levels = c(1:2), labels = c("Privado", "Público")),
-         prov_fct = factor(provincia, levels = c(1:24), 
-                           labels = c("Azuay","Bolívar","Cañar","Carchi","Cotopaxi","Chimborazo",
-                                      "El Oro","Esmeraldas","Guayas","Imbabura","Loja","Los Ríos",
-                                      "Manabí","Morona Santiago","Napo","Pastaza","Pichincha",
-                                      "Tungurahua","Z.Chinchipe","Galápagos","Sucumbíos","Orellana",
-                                      "Santo Domingo de los Tsáchilas","Santa Elena")),
-         ciiu4_1_fct = as.factor(ciiu4_1),
-         region = fct_collapse(prov_fct,
-                               "Sierra" = c("Azuay","Bolívar","Carchi","Cañar","Chimborazo",
-                                            "Cotopaxi","Imbabura","Loja","Pichincha","Tungurahua"),
-                               "Costa" = c("El Oro","Esmeraldas","Guayas","Los Ríos","Manabí",
-                                           "Santa Elena","Santo Domingo de los Tsáchilas"),
-                               "Región Amazónica" = c("Morona Santiago","Napo","Orellana",
-                                                      "Pastaza","Sucumbíos","Z.Chinchipe"),
-                               "Islas Galápagos" = "Galápagos")) 
+  mutate(sector = factor(empleo_total, levels = c(1:2), labels = c("Privado", "Público"))) %>%
+  create_province_factors() %>%
+  create_region_factors() %>%
+  mutate(ciiu4_1_fct = as.factor(ciiu4_1)) 
 
 # agrupando la base por actividad productiva -----
 
 df_ciiu <- 
   df_raw %>% 
   filter(ano == 2023, mes == 3) %>% 
-  mutate(ciiu4_1_fct = fct_collapse(ciiu4_1_fct,
-                                    "Agropecuaria y pesca" = "A",
-                                    "Industria minero-energética" = c("B","D"),
-                                    "Industrias manufactureras" = "C",
-                                    "Servicios publicos/defensa/saneamiento" = c("E","O"),
-                                    "Sector inmobiliario y construcción" = c("F","L"),
-                                    "Comercio; reparación de vehículos motorizados" = "G",
-                                    "Transporte y almacenamiento" = "H",
-                                    "Hospitalidad y de servicio de comidas" = "I",
-                                    "Información y comunicación" = "J",
-                                    "Actividades financieras y de seguros" = "K",
-                                    "Servicios profesionales y técnicos" = "M",
-                                    "Servicios administrativos y otros" =c("N","S"),
-                                    "Enseñanza" = "P",
-                                    "Salud y asistencia" = "Q",
-                                    "Artes, entretenimiento y recreación" = "R",
-                                    "Organizaciones internacionales" = "U",
-                                    "Otro" = "Z0_Nocla_CIIU")) %>%
+  create_ciiu_classification_grouped() %>%
   group_by(ciiu4_1_fct) %>% 
-  summarize(mediana_sueldo = median(sueldo, na.rm = TRUE),empleo = n()) %>%
+  summarize(mediana_sueldo = median(sueldo, na.rm = TRUE), empleo = n(), .groups = "drop") %>%
   mutate(porcentaje_empleo = empleo/sum(empleo)*100) %>%
   arrange(desc(mediana_sueldo))
 
@@ -124,34 +85,30 @@ df_median_p <-
 
 df_empleo <- 
   df_raw %>%
-  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
-  group_by(fecha_1, sector) %>%
-  summarise(empleo = n()) %>%
-  mutate(porcentaje_empleo = empleo/sum(empleo))
+  create_date_column() %>%
+  create_employment_summary_by_sector()
 
 # Base para la evolucion de la tasa de empleo formal-----
 
 df_empleo_1 <- 
   df_raw %>%
-  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
-  group_by(fecha_1) %>%
-  summarise(empleo = n())
+  create_date_column() %>%
+  create_employment_summary()
 
 # Base para la evolucion del salario mediano por sector-----
 
 df_median <- 
   df_raw %>%
-  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
+  create_date_column() %>%
   group_by(fecha_1, sector) %>%
-  summarise(sueldo_mediano = median(sueldo, na.rm = TRUE))
+  summarise(sueldo_mediano = median(sueldo, na.rm = TRUE), .groups = "drop")
 
 # Base para la evolucion de la tasa de empleo formal-----
 
 df_empleo <- 
   df_raw %>%
-  mutate(fecha_1= paste("01", paste(mes,ano, sep = '-')) %>% dmy()) %>%
-  group_by(fecha_1) %>%
-  summarise(empleo = n())
+  create_date_column() %>%
+  create_employment_summary()
 
 # Base % de personas empleadas por provincia-----
 
@@ -261,31 +218,8 @@ graf_empleo <- ggplot(df_empleo, aes(fecha_1, empleo)) +
 
 # guardando los graficos-----
 
-ggsave("figures/grafico_median.png", 
-       plot = graf_median,
-       device = "png",
-       width = 12,
-       height = 8,
-       dpi = 1200)
-
-ggsave("figures/grafico_median_p.png", 
-       plot = graf_median_p,
-       device = "png",
-       width = 12,
-       height = 8,
-       dpi = 1200)
-
-ggsave("figures/grafico_ciiu.png", 
-       plot = graf_median_ciiu,
-       device = "png",
-       width = 12,
-       height = 8,
-       dpi = 1200)
-
-ggsave("figures/grafico_empleo_tot.png", 
-       plot = graf_empleo,
-       device = "png",
-       width = 12,
-       height = 8,
-       dpi = 1200)
+save_plot_standard(graf_median, "figures/grafico_median.png")
+save_plot_standard(graf_median_p, "figures/grafico_median_p.png")
+save_plot_standard(graf_median_ciiu, "figures/grafico_ciiu.png")
+save_plot_standard(graf_empleo, "figures/grafico_empleo_tot.png")
 
