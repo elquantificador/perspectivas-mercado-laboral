@@ -240,10 +240,5 @@ Este proyecto está bajo los términos de la licencia especificada en el reposit
 ## Contacto
 
 **El Quantificador**
-- Web: [elquantificador.org](https://elquantificador.org)
-- Email: Para consultas sobre metodología y datos
-
----
-
-*Proyecto desarrollado por El Quantificador para el análisis del mercado laboral ecuatoriano*
-
+- Web: [elquantificador.org](https://elquantificador.blog)
+- Email: Para consultas sobre metodología y datos elquantificador@gmail.com
