@@ -240,5 +240,5 @@ Este proyecto está bajo los términos de la licencia especificada en el reposit
 ## Contacto
 
 **El Quantificador**
-- Web: [elquantificador.org](https://elquantificador.blog)
+- Web: [elquantificador.blog](https://elquantificador.blog)
 - Email: Para consultas sobre metodología y datos elquantificador@gmail.com
