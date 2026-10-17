@@ -39,7 +39,7 @@ Pero, aquí se debe mencionar que existen otros análisis que van en otra direcc
 # La evolución del empleo en el sector formal
 
 ```{r}
-knitr::include_graphics('figures/grafico_empleo_tot.png')
+knitr::include_graphics('../figures/grafico_empleo_tot.png')
 ```
 
 Con todo esto en mente, se puede analizar la evolución del número de empleos registrados en la seguridad social. En 2022 se evidencia una tendencia creciente, alcanzando en diciembre 2.8 millones de personas inscritas. En contraste, para el primer trimestre de 2023, se experimentó una leve caída del 0,4% . Es importante destacar que no se puede inferir que esa disminución se debió a la subida del SBU en 2023, pues Ecuador está atravesando por una serie de problemas adicionales, los cuales podrían haber influido, que van desde la inestabilidad política hasta la inseguridad. 
@@ -49,7 +49,7 @@ Ciertamente es posible argumentar que la lenta recuperación económica y los pr
 # La remuneración del trabajo a lo largo del tiempo
 
 ```{r}
-knitr::include_graphics('figures/grafico_median.png')
+knitr::include_graphics('../figures/grafico_median.png')
 ```
 
 Para observar la evolución de la mediana del salario en Ecuador, se tomó en cuenta únicamente al sector privado debido a que la variación de salarios del sector público es mínima. Además, estos salarios no siempre están en función de los cambios en el mercado, por lo que la decisión de qué salarios pagar en dicho sector podría estar desconectada de los salarios del sector privado donde se encuentran la mayoría de plazas de trabajo en el sector formal.
@@ -59,7 +59,7 @@ Se observa que la mediana de los salarios en el sector privado ha experimentado 
 Las causas detrás de esta situación pueden deberse al problema de la baja productividad que se mencionó anteriormente. En otras palabras, los salarios medianos de los trabajadores privados del sector formal han experimentado un bajo crecimiento, entre otros factores como la lenta recuperación económica.
 
 ```{r}
-knitr::include_graphics('figures/grafico_median_p.png')
+knitr::include_graphics('../figures/grafico_median_p.png')
 ```
 
 En relación a las provincias más grandes del Ecuador que registran mejores medianas de salarios tenemos a Pichincha, Azuay y Guayas. Esto es poco sorprendente, ya que son centros neurálgicos del país donde se desarrollan y concentran actividades productivas de todo tipo. No obstante, también es importante analizar el aparentemente alto salario de las provincias amazónicas.
@@ -69,7 +69,7 @@ Zamora Chinchipe y Morona Santiago registran cifras de $733 y $675, respectivame
 En términos de las industrias del país, identificadas por el CIIU, las industrias que registran mejores resultados son, en primer lugar, organizaciones extraterritoriales. Estas organizaciones, principalmente conformadas por embajadas y ONGs internacionales en su mayoría cuentan con personal que aparte de estar bien calificado, es personal extranjero, a los que se les pagan remuneraciones altas. Esto se debe a que las remuneraciones pagadas en otros países responden a la productividad de dichos países, que suele ser significativamente mayor a la productividad ecuatoriana. Sin embargo, es importante considerar que la industria de organizaciones extranjeras no aporta tantos empleos: en marzo del 2023, esta industria constituye solo un 0.01% del empleo global. 
 
 ```{r}
-knitr::include_graphics('figures/grafico_ciiu.png')
+knitr::include_graphics('../figures/grafico_ciiu.png')
 ```
 
 No es de extrañar que el segundo lugar le pertenezca a las industrias energéticas y mineras del Ecuador. Los trabajadores requeridos en estas actividades deben contar con ciertas habilidades técnicas específicas muy escasas, pero altamente demandadas. Es justo mencionar que, a pesar de que las actividades relacionadas con el suministro de energía y extracción de materias primas sea una de las fuentes principales de inversión en el Ecuador, esta no es la que más empleos formales aporta, al tan solo representar el 1.82% del total. Para poner esto en perspectiva, la industria que más empleos aporta es la que tiene que ver con comercio y reparación de vehículos motorizados, significando el 18.8% del total. 

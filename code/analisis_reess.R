@@ -250,6 +250,12 @@ graf_empleo <- ggplot(df_empleo, aes(fecha_1, empleo)) +
 
 # guardando los graficos-----
 
+# figures/ no viene en el repositorio, así que se crea antes de guardar
+dir.create("figures", recursive = TRUE, showWarnings = FALSE)
+
+# Se guarda la base para que code/tablas_ress.R pueda correr por separado
+saveRDS(ress_raw, "data/ress_raw.rds")
+
 ggsave("figures/grafico_median.png", 
        plot = graf_median,
        device = "png",
