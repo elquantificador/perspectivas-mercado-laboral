@@ -1,0 +1,2 @@
+source_name,institution,period,official_url,downloaded_file,script
+Registro Estadístico de Empleo en la Seguridad Social (REESS),Instituto Nacional de Estadística y Censos (INEC),2022-01 a 2023-03,https://www.ecuadorencifras.gob.ec/registro-empleo-seguridad-social/,"data/REESS_AAAA_M.csv (15 archivos mensuales; copia en github.com/laboratoriolide/datos-reess)",code/download_reess.R

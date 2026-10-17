@@ -1,10 +1,9 @@
 cff-version: 1.2.0
 message: "Si usas este material, cítalo con estos datos."
-title: "Articulo del Quantificador sobre las perspectivas sobre el mercado laboral entre el periodo 2022 y 2023."
+title: "Perspectivas sobre el mercado laboral: ¿dónde están los mejores sueldos del país?"
 type: dataset
 authors:
-  - name: "El Quantificador (LIDE)"
-    website: "https://elquantificador.org/"
+  - family-names: "Morales"
+    given-names: "Sebastián"
 repository-code: "https://github.com/elquantificador/perspectivas-mercado-laboral"
 license: MIT
-# Agrega aquí a las personas autoras del artículo cuando corresponda.
