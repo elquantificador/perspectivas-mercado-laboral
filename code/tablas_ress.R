@@ -5,6 +5,9 @@
 # Cargar librerias - usar setup centralizado
 source("code/setup.R")
 
+# Lee la base que guarda code/analisis_reess.R (corre ese script primero)
+ress_raw <- readRDS("data/ress_raw.rds")
+
 # Análisis ------------------------------------------------------------------------------------------------
 
 df_ress <- 

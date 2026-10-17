@@ -41,19 +41,19 @@ Fuente oficial: https://www.ecuadorencifras.gob.ec/registro-empleo-seguridad-soc
 - `figures/grafico_median.png`: mediana del sueldo en el sector privado formal, 2022-2023.
 - `figures/grafico_median_p.png`: mediana del sueldo formal por provincia, marzo de 2023.
 - `figures/grafico_ciiu.png`: mediana del sueldo formal por industria (CIIU), marzo de 2023.
+- `data/ress_raw.rds`: base unida de los CSV mensuales, que `code/analisis_reess.R` guarda para `code/tablas_ress.R`.
 - `df_ciiu.xlsx`, `df_empleo_1.xlsx`, `df_ciiugr.xlsx`, `df_empleo_ciiu.xlsx` y `archivo_combinado.xlsx` (en la raíz): tablas de empleo por industria y por mes que escribe `code/tablas_ress.R`; el combinado reúne las cuatro hojas.
-- `report/articulo_1.Rmd` y `report/articulo_1.html`: texto del artículo; el Rmd carga las figuras desde `figures/`.
+- `report/articulo_1.Rmd` y `report/articulo_1.html`: texto del artículo; el Rmd carga las figuras desde `../figures/`.
 
-Los PNG y los Excel no están versionados en el repositorio; se generan al ejecutar los scripts.
+Los PNG, los Excel y el `.rds` no están versionados en el repositorio; se generan al ejecutar los scripts.
 
 ## Cómo replicar en este repositorio
 
-Este repositorio no tiene `MASTER.R` ni una guía propia de replicación (el README anterior describía otro artículo), así que el orden siguiente se dedujo de los scripts. Hay pasos que dependen de la sesión de R, por lo que conviene correr todo en la misma sesión y desde la raíz del repositorio (abre `repositorio_IESS.Rproj`).
+Este repositorio no tiene `MASTER.R` ni una guía propia de replicación (el README anterior describía otro artículo). El directorio de trabajo es la raíz del repositorio (abre `repositorio_IESS.Rproj`).
 
-1. Crea las carpetas `data/` y `figures/` si no existen; los scripts no las crean y `.gitignore` excluye `data/`.
-2. Corre `code/analisis_reess.R`. Ese script ejecuta `code/setup.R` (carga paquetes) y `code/download_reess.R` (descarga los 15 CSV mensuales a `data/` y los une en el objeto `ress_raw`), y luego construye y guarda las cuatro figuras en `figures/`.
-3. Corre `code/tablas_ress.R` en la misma sesión. Usa el objeto `ress_raw` que dejó el paso anterior, porque no vuelve a descargar los datos, y escribe los archivos Excel en la raíz.
-4. Para ver el artículo, abre `report/articulo_1.Rmd` y usa Knit. El Rmd busca las imágenes en `figures/` relativa a `report/`, mientras que el script las guarda en `figures/` de la raíz; copia o ajusta la ruta si el Knit no las encuentra.
+1. Corre `code/analisis_reess.R`. Ese script ejecuta `code/setup.R` (carga paquetes) y `code/download_reess.R` (crea `data/`, descarga los 15 CSV mensuales y los une en el objeto `ress_raw`), construye las cuatro figuras, crea `figures/` y las guarda ahí. También guarda la base unida en `data/ress_raw.rds`.
+2. Corre `code/tablas_ress.R`. Lee `data/ress_raw.rds`, así que puede correr en una sesión nueva, pero solo después del paso 1. Escribe los archivos Excel en la raíz.
+3. Para ver el artículo, abre `report/articulo_1.Rmd` y usa Knit. El Rmd carga las figuras desde `../figures/`, es decir, la carpeta `figures/` de la raíz.
 
 ## README anterior
 

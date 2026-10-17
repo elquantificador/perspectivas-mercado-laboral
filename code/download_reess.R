@@ -6,6 +6,9 @@
 
 # Descargar ---------------------------------------------------------------
 
+# data/ no viene en el repositorio (git la ignora), así que se crea aquí
+dir.create('data', recursive = TRUE, showWarnings = FALSE)
+
 # Configuración de datos a descargar
 # Para agregar nuevos períodos, actualizar estas variables:
 # - Agregar años a download_years
